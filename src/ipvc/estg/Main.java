@@ -24,8 +24,12 @@ public class Main {
         System.out.println("Password:");
         password = scanlogin.nextLine();
 
-    } while ()
     //Scanner scanpass = new Scanner(System.in);
+
+        switch (op)
+
+    } while ()
+
 
 
         Scanner scanop = new Scanner(System.in);

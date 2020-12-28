@@ -15,6 +15,7 @@ public class Utilizador {
     private int horasDiarias;
     private int tarefasRealizadas;
     private int projetosRealizados;
+    private privilegio privilegio = ipvc.estg.privilegio.UTILIZADOR;
     private ArrayList<tarefas>tarefas;
 
 
