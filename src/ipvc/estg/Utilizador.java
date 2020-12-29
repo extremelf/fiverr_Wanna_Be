@@ -1,8 +1,9 @@
 package ipvc.estg;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
-public class Utilizador {
+public class Utilizador{
 
 
     private String userName;
@@ -19,7 +20,7 @@ public class Utilizador {
     private ArrayList<tarefas>tarefas;
 
 
-    public Utilizador(String userName,String nome,String password, String profissao, String contacto  ) {
+    public Utilizador(String userName,String nome,String password, String profissao, String contacto) {
         this.rating = 0;
         this.tarefasRealizadas = 0;
         this.projetosRealizados = 0;
@@ -29,6 +30,25 @@ public class Utilizador {
         this.userName=userName;
         this.contacto = contacto;
     }
+
+    public Menu getMenu(){
+        return new UserMenu();
+    }
+
+    public boolean Login(String password, String username){
+        return this.correctUsername(username) && this.correctPassword(password);
+    }
+
+
+    private boolean correctUsername(String username){
+        return this.userName.equals(username);
+    }
+
+    private boolean correctPassword(String password){
+        return this.password.equals(password);
+    }
+
+
 
 
     public String getUserName() {

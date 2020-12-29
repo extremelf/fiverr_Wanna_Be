@@ -1,102 +1,94 @@
 package ipvc.estg;
 
+import jdk.jshell.execution.Util;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
-        int op=0;
+        int op = 0;
 
         //String admin = "admin";
         String loginUser;
         String password;
-	Scanner scanlogin = new Scanner(System.in);
+        Scanner scan = new Scanner(System.in);
+        ArrayList<Utilizador> utilizadores = new ArrayList<Utilizador>();
+        Utilizador autenticado = null;
+        boolean res = true;
+        //Criar o admin por defeito
+        // Não estou a conseguir verificar se está realmente vazio porque pode ter null e não deixa ver se está empty
+        // if (utilizadores.isEmpty()) {
+            utilizadores.add(new Admin("admin","admin","admin","admin","admin"));
+        // }
 
-	do {
-
-
-        System.out.println("Faça login com as suas credenciais");
-
-
-        System.out.println("Username:");
-        loginUser = scanlogin.nextLine();
-
-        System.out.println("Password:");
-        password = scanlogin.nextLine();
-
-    //Scanner scanpass = new Scanner(System.in);
-
-        switch (op)
-
-    } while ()
+        do {
+            System.out.println("Faça login com as suas credenciais");
 
 
+            System.out.println("Username:");
+            loginUser = scan.nextLine();
 
-        Scanner scanop = new Scanner(System.in);
-    do {
+            System.out.println("Password:");
+            password = scan.nextLine();
 
+            for (int i = 0; i < utilizadores.size(); i++) {
+                res = utilizadores.get(i).Login(loginUser, password);
+                if (res) {
+                    autenticado = utilizadores.get(i);
+                    System.out.println("Sucesso");
+                    break;
+                }
+            }
+        } while (!res);
 
-        System.out.println("Menu");
-        System.out.println(" 1 - Criar utilizador");
-        System.out.println(" 2 - Listar utilizador");
-        System.out.println(" 3 - Selecionar utilizador");
-        System.out.println(" 4 - Apagar utilizador");
-        System.out.println(" 5 - Criar UserManager");
-        System.out.println(" 6 - Listar UserManagers");
-        System.out.println(" 7 - Selecionar UserManager");
-        System.out.println(" 8 - Apagar UserManager");
-        System.out.println(" 9 - Listas todas as tarefas");
-        System.out.println(" 10 - Listar todos os projetos");
-        System.out.println(" 11 - LOGOUT");
-
-        op = scanop.nextInt();
-
-        switch (op) {
-            case 1:
-                break;
-            case 2:
-                break;
-
-            case 3:
-                break;
-
-            case 4:
-                break;
-
-            case 5:
-                break;
-
-            case 6:
-                break;
-
-            case 7:
-                break;
-
-            case 8:
-                break;
-
-            case 9:
-                break;
-
-            case 10:
-                break;
-
-            case 11:
-                break;
-
-            case 0:
-                break;
-
-            default: System.out.println("Opção válida please");
-
-        }
-
-    }   while (op!=0);
+        do {
 
 
+            autenticado.getMenu().show();
+            op = scan.nextInt();
 
+            switch (op) {
+                case 1:
+                    break;
+                case 2:
+                    break;
 
+                case 3:
+                    break;
 
-	System.out.print("aksjdakj");
+                case 4:
+                    break;
+
+                case 5:
+                    break;
+
+                case 6:
+                    break;
+
+                case 7:
+                    break;
+
+                case 8:
+                    break;
+
+                case 9:
+                    break;
+
+                case 10:
+                    break;
+
+                case 11:
+                    break;
+
+                case 0:
+                    break;
+
+                default: System.out.println("Opção válida please");
+            }
+
+        }while (op!=0);
     }
 }
