@@ -1,7 +1,6 @@
 package ipvc.estg;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Utilizador{
 
@@ -16,7 +15,7 @@ public class Utilizador{
     private int horasDiarias;
     private int tarefasRealizadas;
     private int projetosRealizados;
-    private privilegio privilegio = ipvc.estg.privilegio.UTILIZADOR;
+    public privilegio privilegio = ipvc.estg.privilegio.UTILIZADOR;
     private ArrayList<tarefas>tarefas;
 
 
@@ -35,7 +34,7 @@ public class Utilizador{
         return new UserMenu();
     }
 
-    public boolean Login(String password, String username){
+    public boolean Login(String username, String password){
         return this.correctUsername(username) && this.correctPassword(password);
     }
 
