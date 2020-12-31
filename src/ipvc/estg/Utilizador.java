@@ -40,16 +40,13 @@ public class Utilizador{
     }
 
 
-    private boolean correctUsername(String username){
+    public boolean correctUsername(String username){
         return this.userName.equals(username);
     }
 
-    private boolean correctPassword(String password){
+    public boolean correctPassword(String password){
         return this.password.equals(password);
     }
-
-
-
 
     public String getUserName() {
         return userName;
