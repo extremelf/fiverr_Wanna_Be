@@ -128,6 +128,13 @@ public class Utilizador{
     }
 
 
+    public void addUtilizador(String userName,String nome,String password, String profissao, String contacto ){
+
+        
+
+    }
+
+
  // vai buscar as tarefas (?)
 
     public ArrayList<ipvc.estg.tarefas> getTarefas() {

@@ -1,6 +1,8 @@
 package ipvc.estg;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.zip.DataFormatException;
 
 public interface Menu {
     /**
@@ -8,5 +10,5 @@ public interface Menu {
      *
      */
     void show();
-    int choose(int op, Utilizador autenticado, ArrayList<Utilizador> utilizadores);
+    int choose(int op, Utilizador autenticado, ArrayList<Utilizador> utilizadores) throws IOException, DataFormatException;
 }
