@@ -1,6 +1,7 @@
 package ipvc.estg;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Utilizador{
 
@@ -15,7 +16,7 @@ public class Utilizador{
     private int horasDiarias;
     private int tarefasRealizadas;
     private int projetosRealizados;
-    public privilegio privilegio = ipvc.estg.privilegio.UTILIZADOR;
+    private privilegio privilegio = ipvc.estg.privilegio.UTILIZADOR;
     private ArrayList<tarefas>tarefas;
 
 
@@ -38,6 +39,46 @@ public class Utilizador{
         return this.correctUsername(username) && this.correctPassword(password);
     }
 
+    public void AlterarDados(int op){
+        Scanner scan = new Scanner(System.in);
+        String input;
+
+        System.out.println("opção:"+op);
+
+        switch(op){
+            case 1:{
+                System.out.println("Novo username:");
+                input=scan.nextLine();
+                this.setUserName(input);
+                break;
+            }
+            case 2:{
+                System.out.println("Novo nome:");
+                input=scan.nextLine();
+                this.setNome(input);
+                break;
+            }
+            case 3:{
+                System.out.println("Nova password:");
+                input=scan.nextLine();
+                this.setPassword(input);
+                break;
+            }
+            case 4:{
+                System.out.println("Nova profissão:");
+                input=scan.nextLine();
+                this.setProfissao(input);
+                break;
+            }
+            case 5:{
+                System.out.println("Novo contacto:");
+                input=scan.nextLine();
+                this.setContacto(input);
+                break;
+            }
+
+        }
+    }
 
     public boolean correctUsername(String username){
         return this.userName.equals(username);
@@ -126,14 +167,11 @@ public class Utilizador{
     public void setProjetosRealizados(int projetosRealizados) {
         this.projetosRealizados = projetosRealizados;
     }
-
-
     public void addUtilizador(String userName,String nome,String password, String profissao, String contacto ){
 
-        
+
 
     }
-
 
  // vai buscar as tarefas (?)
 

@@ -22,13 +22,14 @@ public class AdminMenu implements Menu{
         System.out.println(" 0  - LOGOUT");
     }
     @Override
-    public int choose(int op, Utilizador autenticado, ArrayList<Utilizador> utilizadores) throws IOException, DataFormatException {
-        File dataUsersFile = new File("C:\\Users\\Utilizador\\JavaProjectsPII\\fiverr_Wanna_Be\\ dadosUtilizadores.txt");
+    public Utilizador choose(int op, Utilizador autenticado, ArrayList<Utilizador> utilizadores) throws IOException, DataFormatException {
+        File dataUsersFile = new File("C:\\Users\\mingo\\Desktop\\dadosUtilizadores.txt");
         Scanner scan = new Scanner(System.in);
         int i=1;
         switch(op){
             case 0:{
-                i=0;
+                autenticado = null;
+                System.out.println("Logout com sucesso");
                 break;
             }
             case 1:{
@@ -37,7 +38,7 @@ public class AdminMenu implements Menu{
                 String useradd = scan.nextLine();
                 System.out.println("---------");
                 for (int u = 0; u < utilizadores.size(); u++) {                 //
-                                                                                //
+                    //
                     if (utilizadores.get(u).correctUsername(useradd)) {         // ESTE CICLO FUNCIONA MAS A EXCEPTION ACABA COM O PROGRAMA E ISSO NAO É O DESEJADO XD
                         throw new DataFormatException("Utilizador já existe");  //
                     }                                                           //
@@ -67,31 +68,25 @@ public class AdminMenu implements Menu{
 
 
 
-                /**
-                 * TENTATIVA DE COLOCAR A GUARDAR EM FICHEIRO
-                 * ele dá um simples erro por causa de uma exception, podes descomentar para veres, o problema está na linha 79 com o 'charSequence'
-                FileWriter fileWr = new FileWriter(dataUsersFile, true);
-                BufferedWriter fileBw = new BufferedWriter(fileWr);
-
-                PrintWriter filePw = new PrintWriter(fileBw);
-
-                filePw.append("\n");
-                filePw.append((CharSequence) new Utilizador(useradd, nomeadd, passwordaad, profissaoadd, contactadd));
-
+                //
+                 //* TENTATIVA DE COLOCAR A GUARDAR EM FICHEIRO
+                 //* ele dá um simples erro por causa de uma exception, podes descomentar para veres, o problema está na linha 79 com o 'charSequence'
+                 FileWriter fileWr = new FileWriter(dataUsersFile, true);
+                 BufferedWriter fileBw = new BufferedWriter(fileWr);
+                 PrintWriter filePw = new PrintWriter(fileBw);
+                // filePw.append("\n");
+                 //filePw.append((CharSequence) new Utilizador(useradd, nomeadd, passwordaad, profissaoadd, contactadd));
+                 //filePw.close();
+                filePw.write("A sample string to be written at the end of the file!\n");
+                 //* DEPOIS PARA LER FUNCIONA DA MESMA FORMA MAS COM UM FileReader
                 filePw.close();
-
-                 * DEPOIS PARA LER FUNCIONA DA MESMA FORMA MAS COM UM FileReader
-
-                */
 
 
                 break;
             }
-
             case 2:{
                 for(int j = 0; j < utilizadores.size(); j++){
-                    System.out.println("Nome:"+utilizadores.get(j).getNome()+" Profissão:"+utilizadores.get(j).getProfissao()+" Contacto:"+utilizadores.get(j).getContacto());
-                    System.out.println("-----------------");
+                    System.out.println("Username: "+utilizadores.get(j).getUserName()+" Password: "+utilizadores.get(j).getPassword()+" Nome: "+utilizadores.get(j).getNome()+" Profissão: "+utilizadores.get(j).getProfissao()+" Contacto: "+utilizadores.get(j).getContacto());
                 }
                 break;
             }
@@ -134,9 +129,7 @@ public class AdminMenu implements Menu{
                 System.out.println("Escolha opção válida");
                 break;
             }
-
         }
-
-        return i;
+        return autenticado;
     }
 }

@@ -1,6 +1,7 @@
 package ipvc.estg;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class UserMenu implements Menu{
     @Override
@@ -20,15 +21,31 @@ public class UserMenu implements Menu{
         System.out.println(" 0  - LOGOUT");
     }
     @Override
-    public int choose(int op, Utilizador autenticado, ArrayList<Utilizador> utilizadores){
+    public Utilizador choose(int op, Utilizador autenticado, ArrayList<Utilizador> utilizadores){
         int i=1;
         switch(op){
             case 0:{
-                i=0;
+                autenticado = null;
+                System.out.println("Logout com sucesso");
                 break;
             }
             case 1:{
-                System.out.println("Opção 1");
+                Scanner scan = new Scanner(System.in);
+                int op1=0;
+
+                System.out.println("Dado a alterar:");
+                System.out.println("1 - Username");
+                System.out.println("2 - Nome");
+                System.out.println("3 - Password");
+                System.out.println("4 - Profissão");
+                System.out.println("5 - Contacto");
+                System.out.println("0 - Sair");
+                op1 = scan.nextInt();
+
+                if(op1 == 0){
+                    break;
+                }
+                autenticado.AlterarDados(op1);
                 break;
             }
             case 2:{
@@ -63,7 +80,7 @@ public class UserMenu implements Menu{
                 break;
             }
         }
-        return i;
+        return autenticado;
     }
 }
 
