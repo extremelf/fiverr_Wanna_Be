@@ -1,6 +1,7 @@
 package ipvc.estg;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 
 public class UserMenu implements Menu{
@@ -20,9 +21,11 @@ public class UserMenu implements Menu{
         System.out.println(" 11 - Imprimir relatorio mensal");
         System.out.println(" 0  - LOGOUT");
     }
+
     @Override
     public Utilizador choose(int op, Utilizador autenticado, ArrayList<Utilizador> utilizadores){
         int i=1;
+        Scanner scan = new Scanner(System.in);
         switch(op){
             case 0:{
                 autenticado = null;
@@ -30,7 +33,6 @@ public class UserMenu implements Menu{
                 break;
             }
             case 1:{
-                Scanner scan = new Scanner(System.in);
                 int op1=0;
 
                 System.out.println("Dado a alterar:");
@@ -55,6 +57,29 @@ public class UserMenu implements Menu{
                 break;
             }
             case 4:{
+
+                System.out.println("Criar uma tarefa ");
+                System.out.println("---------");
+                System.out.println("Nome: ");
+                String nomeadd = scan.nextLine();
+                System.out.println("---------");
+                System.out.println("Descrição: ");
+                String descricaoadd = scan.nextLine();
+
+                
+                System.out.println("Numero do projeto: ");
+                int projetoNumAdd = scan.nextInt();
+                /**
+                 *
+                 * PODES ADICIONAR AQUI O STRING FORMAT PARA O USER INSERIR UMA DATA, EU LEMBRO ME DE FALARES MAS NAO SEI COMO SE FAZ
+                 *
+                 * System.out.println("---------");
+                System.out.println("Contacto: ");
+                String contactadd = scan.nextLine();
+                */
+                //tarefas.add(new tarefas(projetoNumAdd, nomeadd, descricaoadd, new Date(), new Date()));
+
+
                 break;
             }
             case 6:{

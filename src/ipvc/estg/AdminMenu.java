@@ -21,9 +21,17 @@ public class AdminMenu implements Menu{
         System.out.println(" 10 - Listar todos os projetos");
         System.out.println(" 0  - LOGOUT");
     }
+
+
+
     @Override
     public Utilizador choose(int op, Utilizador autenticado, ArrayList<Utilizador> utilizadores) throws IOException, DataFormatException {
-        File dataUsersFile = new File("C:\\Users\\mingo\\Desktop\\dadosUtilizadores.txt");
+        File dataUsersFile = new File("C:\\Users\\Utilizador\\JavaProjectsPII\\fiverr_Wanna_Be\\dadosUtilizadores.txt");
+        //C:\Users\mingo\Desktop\
+
+        /**
+         * Troca o path name sempre que fores correr e mete o meu em comentario
+         */
         Scanner scan = new Scanner(System.in);
         int i=1;
         switch(op){
@@ -38,7 +46,7 @@ public class AdminMenu implements Menu{
                 String useradd = scan.nextLine();
                 System.out.println("---------");
                 for (int u = 0; u < utilizadores.size(); u++) {                 //
-                    //
+                                                                                //
                     if (utilizadores.get(u).correctUsername(useradd)) {         // ESTE CICLO FUNCIONA MAS A EXCEPTION ACABA COM O PROGRAMA E ISSO NAO É O DESEJADO XD
                         throw new DataFormatException("Utilizador já existe");  //
                     }                                                           //

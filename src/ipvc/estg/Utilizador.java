@@ -17,7 +17,7 @@ public class Utilizador{
     private int tarefasRealizadas;
     private int projetosRealizados;
     private privilegio privilegio = ipvc.estg.privilegio.UTILIZADOR;
-    private ArrayList<tarefas>tarefas;
+
 
 
     public Utilizador(String userName,String nome,String password, String profissao, String contacto) {
@@ -79,6 +79,7 @@ public class Utilizador{
 
         }
     }
+
 
     public boolean correctUsername(String username){
         return this.userName.equals(username);
@@ -175,11 +176,7 @@ public class Utilizador{
 
  // vai buscar as tarefas (?)
 
-    public ArrayList<ipvc.estg.tarefas> getTarefas() {
 
-
-        return tarefas;
-    }
 }
 
 

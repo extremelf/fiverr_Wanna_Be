@@ -11,7 +11,7 @@ import jdk.jshell.execution.Util;
 public class Main {
 
     public static void main(String[] args)throws IOException, DataFormatException {
-        int op;
+        /*int op;
 
         String loginUser;
         String password;
@@ -20,6 +20,7 @@ public class Main {
         ArrayList<Utilizador> utilizadores = new ArrayList<>();
         Utilizador autenticado;
         autenticado = null;
+
 
         boolean res = false;
 
@@ -58,6 +59,8 @@ public class Main {
                 autenticado=autenticado.getMenu().choose(op,autenticado,utilizadores);
                 scan.nextLine();
             }while(autenticado != null);
-        }while(true);
+        }while(true);*/
+
+        new LoginInterface();
     }
 }

@@ -1,6 +1,7 @@
 package ipvc.estg;
 
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class tarefas {
@@ -10,9 +11,9 @@ public class tarefas {
     private String descricao;
     private Date dataHoraInicio;
     private Date getDataHorafim;
+    private ArrayList<tarefas> tarefas1 = new ArrayList<>();
 
-
-    public tarefas() {
+    public tarefas(int projetoNumAdd, String nomeadd, String descricaoadd, Date date, Date date1) {
         this.numProjeto=0;
         this.dataHoraInicio= new Date();
     }
