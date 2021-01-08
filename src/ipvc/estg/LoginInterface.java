@@ -3,7 +3,8 @@ package ipvc.estg;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
+import java.io.*;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.zip.DataFormatException;
@@ -17,6 +18,8 @@ public class LoginInterface extends JFrame implements ActionListener {
     private static JButton button;
     private static JLabel sucess;
     private boolean res = true;
+    private Object List;
+    private Object Utilizador;
 
     public LoginInterface(){
 
@@ -55,6 +58,11 @@ public class LoginInterface extends JFrame implements ActionListener {
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }
+            catch (ClassNotFoundException classNotFoundException){
+                classNotFoundException.printStackTrace();
+            } catch (ParseException parseException) {
+                parseException.printStackTrace();
+            }
         });
         panel.add(button);
 
@@ -72,7 +80,7 @@ public class LoginInterface extends JFrame implements ActionListener {
 
 
 
-    public void login() throws DataFormatException, IOException {
+    public void login() throws DataFormatException, IOException, ClassNotFoundException, ParseException {
 
         int op=0;
         Scanner scan = new Scanner(System.in);
@@ -80,12 +88,36 @@ public class LoginInterface extends JFrame implements ActionListener {
         String loginUser;
         String password;
         ArrayList<Utilizador> utilizadores = new ArrayList<>();
+        ArrayList<Convite> convites = new ArrayList<>();
         Utilizador autenticado;
         autenticado = null;
         boolean res = false;
-        utilizadores.add(new Admin("admin", "admin", "admin", "admin", "admin"));
-        utilizadores.add(new Admin("admin1", "admin1", "admin1", "admin", "admin"));
-        utilizadores.add(new Utilizador("user", "user", "user", "user", "user"));
+        File users = new File("utilizadores.tmp");
+        /*if(users.exists() && !users.isDirectory()){
+            try{
+                FileInputStream readData = new FileInputStream("utilizadores.tmp");
+                ObjectInputStream readStream = new ObjectInputStream(readData);
+
+                //ArrayList<Utilizador> utilizadores = (ArrayList<Utilizador>) readStream.readObject();
+                readStream.close();
+                System.out.println(utilizadores.toString());
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }*/
+
+        if(!users.exists() && !users.isDirectory()){
+            //ArrayList<Utilizador> utilizadores =  new ArrayList<>();
+            Admin init;
+            init = new Admin("admin", "admin", "admin", "admin", "admin");
+            utilizadores.add(init);
+            init.save("utilizadores.tmp");
+            init =new Admin("admin1", "admin1", "admin1", "admin", "admin");
+            utilizadores.add(init);
+            init.save("utilizadores.tmp");
+            init.save("utilizadores.tmp");
+        }
+
         do {
             do{
                 System.out.println("Faça login com as suas credenciais");
@@ -109,7 +141,7 @@ public class LoginInterface extends JFrame implements ActionListener {
             do {
                 autenticado.getMenu().show();
                 op = scan.nextInt();
-                autenticado=autenticado.getMenu().choose(op,autenticado,utilizadores);
+                autenticado=autenticado.getMenu().choose(op,autenticado,utilizadores,convites);
                 scan.nextLine();
             }while(autenticado != null);
         }while(true);

@@ -1,5 +1,7 @@
 package ipvc.estg;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
@@ -16,15 +18,17 @@ public class UserMenu implements Menu{
         System.out.println(" 6  - Remover tarefas");
         System.out.println(" 7  - Listar tarefas por intervalo");
         System.out.println(" 8  - Convidar utilizador");
-        System.out.println(" 9  - Alterar convidados");
-        System.out.println(" 10 - Imprimir relatorio pessoal do mês");
-        System.out.println(" 11 - Imprimir relatorio mensal");
+        System.out.println(" 9  - Listar convites");
+        System.out.println(" 10 - Alterar convidados");
+        System.out.println(" 11 - Imprimir relatorio pessoal do mês");
+        System.out.println(" 12 - Imprimir relatorio mensal");
         System.out.println(" 0  - LOGOUT");
     }
 
     @Override
-    public Utilizador choose(int op, Utilizador autenticado, ArrayList<Utilizador> utilizadores){
-        int i=1;
+    public Utilizador choose(int op, Utilizador autenticado, ArrayList<Utilizador> utilizadores,ArrayList<Convite> convites) throws ParseException {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyy HH:mm");
+
         Scanner scan = new Scanner(System.in);
         switch(op){
             case 0:{
@@ -33,7 +37,7 @@ public class UserMenu implements Menu{
                 break;
             }
             case 1:{
-                int op1=0;
+                int op1;
 
                 System.out.println("Dado a alterar:");
                 System.out.println("1 - Username");
@@ -65,20 +69,34 @@ public class UserMenu implements Menu{
                 System.out.println("---------");
                 System.out.println("Descrição: ");
                 String descricaoadd = scan.nextLine();
+                System.out.println("---------");
+                System.out.println("Data de inicio: (DD/MM/YYYY HH:mm)");
+                String dataInicio = scan.nextLine();
 
-                
+                Date dataAdd = null;
+                if(!dataInicio.isBlank()){
+                    dataAdd = format.parse(dataInicio);
+                }
+
                 System.out.println("Numero do projeto: ");
-                int projetoNumAdd = scan.nextInt();
-                /**
-                 *
-                 * PODES ADICIONAR AQUI O STRING FORMAT PARA O USER INSERIR UMA DATA, EU LEMBRO ME DE FALARES MAS NAO SEI COMO SE FAZ
-                 *
-                 * System.out.println("---------");
+                String projetoNumAdd = scan.nextLine();
+                /*
+
+                  PODES ADICIONAR AQUI O STRING FORMAT PARA O USER INSERIR UMA DATA, EU LEMBRO ME DE FALARES MAS NAO SEI COMO SE FAZ
+
+                  System.out.println("---------");
                 System.out.println("Contacto: ");
                 String contactadd = scan.nextLine();
                 */
-                //tarefas.add(new tarefas(projetoNumAdd, nomeadd, descricaoadd, new Date(), new Date()));
-
+                if(projetoNumAdd.isEmpty()){
+                    if(dataAdd!=null){
+                        autenticado.tarefas.add(new tarefa(autenticado.getUserName(), nomeadd, descricaoadd, dataAdd));
+                    }
+                    else{
+                        autenticado.tarefas.add(new tarefa(autenticado.getUserName(), nomeadd, descricaoadd));
+                    }
+                }
+                                //tarefas.add(new tarefas(projetoNumAdd, nomeadd, descricaoadd, new Date(), new Date()));
 
                 break;
             }
@@ -89,6 +107,19 @@ public class UserMenu implements Menu{
                 break;
             }
             case 8:{
+                /**
+                 * Isto deve passar para dentro do submenu de "alterar tarefa" porque senão tem de listar as tarefas e selecionar uma e na parte de "alterar tarefa" ele já o irá fazer
+                 */
+                System.out.println("Qual o numero da tarefa a fazer convite");
+                int k = scan.nextInt();
+
+                System.out.println("username do utilizador a convidar:");
+                String convidado = scan.nextLine();
+
+                for(Utilizador utilizadore : utilizadores){
+                    if(convidado.equals(utilizadore.getUserName()));
+                        convites.add(new Convite(autenticado.getUserName(),utilizadore.getUserName(),autenticado.tarefas.get(k)));
+                }
                 break;
             }
             case 9:{
@@ -98,6 +129,9 @@ public class UserMenu implements Menu{
                 break;
             }
             case 11:{
+                break;
+            }
+            case 12:{
                 break;
             }
             default:{

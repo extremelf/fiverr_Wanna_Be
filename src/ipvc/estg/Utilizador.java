@@ -1,9 +1,11 @@
 package ipvc.estg;
 
+import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Utilizador{
+public class Utilizador implements Serializable {
 
 
     private String userName;
@@ -16,7 +18,8 @@ public class Utilizador{
     private int horasDiarias;
     private int tarefasRealizadas;
     private int projetosRealizados;
-    private privilegio privilegio = ipvc.estg.privilegio.UTILIZADOR;
+    ArrayList<tarefa> tarefas;
+    //private privilegio privilegio = ipvc.estg.privilegio.UTILIZADOR;
 
 
 
@@ -79,8 +82,25 @@ public class Utilizador{
 
         }
     }
+    public void save(String filename) throws IOException, FileNotFoundException {
+        try{
+            FileOutputStream fos = new FileOutputStream("utilizadores.tmp",true);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(this);
 
+            oos.flush();
+            oos.close();
 
+            fos.close();
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public String toString(){
+       return "Username: "+userName+" Password: "+password+" Nome: "+nome+" Profissão: "+profissao+" Contacto: "+contacto+"\n";
+    }
     public boolean correctUsername(String username){
         return this.userName.equals(username);
     }
@@ -169,6 +189,7 @@ public class Utilizador{
         this.projetosRealizados = projetosRealizados;
     }
     public void addUtilizador(String userName,String nome,String password, String profissao, String contacto ){
+
 
 
 
