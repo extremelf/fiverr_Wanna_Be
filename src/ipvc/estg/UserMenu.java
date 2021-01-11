@@ -123,6 +123,18 @@ public class UserMenu implements Menu{
                 break;
             }
             case 9:{
+                int i = 0;
+                System.out.println("Convites Recebidos:");
+                for (Convite convite : convites) {
+                    if (convite.getConvidado().equals(autenticado.getUserName())) {
+                        System.out.println("---------------");
+                        System.out.println(convite.toString());
+                        System.out.println("---------------");
+                    }
+                }
+                System.out.println("Deseja aceitar algum convite?");
+
+
                 break;
             }
             case 10:{
