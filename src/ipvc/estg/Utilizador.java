@@ -18,7 +18,7 @@ public class Utilizador implements Serializable {
     private int horasDiarias;
     private int tarefasRealizadas;
     private int projetosRealizados;
-    ArrayList<tarefa> tarefas;
+    private ArrayList<tarefa> tarefas = new ArrayList<>();
     //private privilegio privilegio = ipvc.estg.privilegio.UTILIZADOR;
 
 
@@ -95,6 +95,18 @@ public class Utilizador implements Serializable {
         }catch(IOException e){
             e.printStackTrace();
         }
+    }
+
+    public void novaTarefa(tarefa novaTarefa) {
+        this.tarefas.add(novaTarefa);
+    }
+
+    public ArrayList<tarefa> getTarefas() {
+        return tarefas;
+    }
+
+    public void setTarefas(ArrayList<tarefa> tarefas) {
+        this.tarefas = tarefas;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package ipvc.estg;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.zip.DataFormatException;
@@ -10,29 +11,47 @@ import jdk.jshell.execution.Util;
 
 public class Main {
 
-    public static void main(String[] args)throws IOException, DataFormatException {
-        /*int op;
+    public static void main(String[] args) throws IOException, DataFormatException, ParseException {
+        int op=0;
+        Scanner scan = new Scanner(System.in);
 
         String loginUser;
         String password;
-        Scanner scan = new Scanner(System.in);
-
         ArrayList<Utilizador> utilizadores = new ArrayList<>();
+        ArrayList<Convite> convites = new ArrayList<>();
         Utilizador autenticado;
         autenticado = null;
-
-
         boolean res = false;
+        File users = new File("utilizadores.tmp");
+        /*if(users.exists() && !users.isDirectory()){
+            try{
+                FileInputStream readData = new FileInputStream("utilizadores.tmp");
+                ObjectInputStream readStream = new ObjectInputStream(readData);
 
-        //diz o que achas desta forma de organizar a main, o programa em si fica a funcionar nos "User/AdminMenu.java, a main ficaria assim só
+                //ArrayList<Utilizador> utilizadores = (ArrayList<Utilizador>) readStream.readObject();
+                readStream.close();
+                System.out.println(utilizadores.toString());
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }*/
 
-        //Criar o admin por defeito
-        // Não estou a conseguir verificar se está realmente vazio porque pode ter null e não deixa ver se está empty
-        // if (utilizadores.isEmpty()) {
-        utilizadores.add(new Admin("admin", "admin", "admin", "admin", "admin"));
-        utilizadores.add(new Admin("admin1", "admin1", "admin1", "admin", "admin"));
-        utilizadores.add(new Utilizador("user", "user", "user", "user", "user"));
-        // }
+        //if(!users.exists() && !users.isDirectory()){
+            //ArrayList<Utilizador> utilizadores =  new ArrayList<>();
+            Admin init;
+            init = new Admin("admin", "admin", "admin", "admin", "admin");
+            utilizadores.add(init);
+            init.save("utilizadores.tmp");
+            init =new Admin("admin1", "admin1", "admin1", "admin", "admin");
+            utilizadores.add(init);
+
+            utilizadores.add(new Utilizador("luis","Luís","1234","estudante","lpaulofernandes@ipvc.pt"));
+            utilizadores.add(new Utilizador("jorge","Jorge","1234","estudante","jorge@gmail.com"));
+
+            init.save("utilizadores.tmp");
+            init.save("utilizadores.tmp");
+      //  }
+
         do {
             do{
                 System.out.println("Faça login com as suas credenciais");
@@ -56,11 +75,9 @@ public class Main {
             do {
                 autenticado.getMenu().show();
                 op = scan.nextInt();
-                autenticado=autenticado.getMenu().choose(op,autenticado,utilizadores);
+                autenticado=autenticado.getMenu().choose(op,autenticado,utilizadores,convites);
                 scan.nextLine();
             }while(autenticado != null);
-        }while(true);*/
-
-        new LoginInterface();
+        }while(true);
     }
 }

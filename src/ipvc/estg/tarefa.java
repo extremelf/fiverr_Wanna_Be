@@ -6,6 +6,9 @@ import java.util.Date;
 
 public class tarefa {
 
+    private static int contador=0;
+
+    private int num;
     private int numProjeto;
     private String nome;
     private String descricao;
@@ -25,16 +28,32 @@ public class tarefa {
     */
 
     public tarefa(String autor, String nome, String descricao, Date inicio) {
+        this.num = contador++;
         this.nome = nome;
         this.descricao = descricao;
         this.dataHoraInicio = inicio;
         this.autor=autor;
     }
     public tarefa(String autor, String nome, String descricao){
+        this.num = contador++;
         this.nome = nome;
         this.descricao = descricao;
         this.dataHoraInicio = new Date();
-        this.autor= this.autor;
+        this.autor=autor;
+    }
+
+    @Override
+    public String toString(){
+        String str;
+        String str1 = "Num"+getNum()+"\nNome: "+getNome()+"\nDescrição: "+getDescricao()+"\nAutor: "+getAutor()+"\nData/Hora Inicio: "+getDataHoraInicio();
+        if(getDataHorafim()!=null){
+            String str2 = "Data/Hora Fim: "+getDataHorafim();
+            str = str1.concat(str2);
+        }
+        else{
+            str = str1;
+        }
+        return str;
     }
 
     public boolean isAuthor(String username){
@@ -57,6 +76,21 @@ public class tarefa {
         }
     }
 
+    public int getNum() {
+        return num;
+    }
+
+    public void setNum(int num) {
+        this.num = num;
+    }
+
+    public String getAutor() {
+        return autor;
+    }
+
+    public void setAutor(String autor) {
+        this.autor = autor;
+    }
 
     public int getNumProjeto() {
         return numProjeto;

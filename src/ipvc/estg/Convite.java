@@ -8,7 +8,7 @@ public class Convite {
     private tarefa tarefa;
 
     public Convite(String autor,String convidado,tarefa tarefa){
-        this.num = this.indice++;
+        this.num = indice++;
         this.autor = autor;
         this.convidado = convidado;
         this.tarefa = tarefa;

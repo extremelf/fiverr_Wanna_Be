@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class UserMenu implements Menu{
@@ -78,8 +79,8 @@ public class UserMenu implements Menu{
                     dataAdd = format.parse(dataInicio);
                 }
 
-                System.out.println("Numero do projeto: ");
-                String projetoNumAdd = scan.nextLine();
+                //System.out.println("Numero do projeto: ");
+               // String projetoNumAdd = scan.nextLine();
                 /*
 
                   PODES ADICIONAR AQUI O STRING FORMAT PARA O USER INSERIR UMA DATA, EU LEMBRO ME DE FALARES MAS NAO SEI COMO SE FAZ
@@ -88,17 +89,24 @@ public class UserMenu implements Menu{
                 System.out.println("Contacto: ");
                 String contactadd = scan.nextLine();
                 */
-                if(projetoNumAdd.isEmpty()){
+               // if(projetoNumAdd.isEmpty()){
                     if(dataAdd!=null){
-                        autenticado.tarefas.add(new tarefa(autenticado.getUserName(), nomeadd, descricaoadd, dataAdd));
+                        autenticado.novaTarefa(new tarefa(autenticado.getUserName(), nomeadd, descricaoadd, dataAdd));
+                        //autenticado.tarefas.add(new tarefa(autenticado.getUserName(), nomeadd, descricaoadd, dataAdd));
                     }
                     else{
-                        autenticado.tarefas.add(new tarefa(autenticado.getUserName(), nomeadd, descricaoadd));
+                        autenticado.novaTarefa(new tarefa(autenticado.getUserName(), nomeadd, descricaoadd));
+                        //autenticado.tarefas.add(new tarefa(autenticado.getUserName(), nomeadd, descricaoadd));
                     }
-                }
+               // }
                                 //tarefas.add(new tarefas(projetoNumAdd, nomeadd, descricaoadd, new Date(), new Date()));
 
                 break;
+            }
+            case 5:{
+                for(int k = 0;k<autenticado.getTarefas().size();k++){
+                    System.out.println(autenticado.getTarefas().get(k).toString());
+                }
             }
             case 6:{
                 break;
@@ -110,15 +118,21 @@ public class UserMenu implements Menu{
                 /**
                  * Isto deve passar para dentro do submenu de "alterar tarefa" porque senão tem de listar as tarefas e selecionar uma e na parte de "alterar tarefa" ele já o irá fazer
                  */
+                for(int k = 0;k<autenticado.getTarefas().size();k++){
+                    System.out.println(autenticado.getTarefas().get(k).toString());
+                }
                 System.out.println("Qual o numero da tarefa a fazer convite");
                 int k = scan.nextInt();
+
+                scan.nextLine();
 
                 System.out.println("username do utilizador a convidar:");
                 String convidado = scan.nextLine();
 
                 for(Utilizador utilizadore : utilizadores){
                     if(convidado.equals(utilizadore.getUserName()));
-                        convites.add(new Convite(autenticado.getUserName(),utilizadore.getUserName(),autenticado.tarefas.get(k)));
+                        convites.add(new Convite(autenticado.getUserName(),utilizadore.getUserName(),autenticado.getTarefas().get(k)));
+                        //convites.add(new Convite(autenticado.getUserName(),utilizadore.getUserName(),autenticado.tarefas.get(k)));
                 }
                 break;
             }
@@ -133,9 +147,17 @@ public class UserMenu implements Menu{
                     }
                 }
                 System.out.println("Deseja aceitar algum convite?");
-
-
-                break;
+                String resposta = scan.nextLine();
+                if(resposta.equalsIgnoreCase("SIM")){
+                    System.out.println("Introduza o numero do convite:");
+                    i = scan.nextInt();
+                    autenticado.novaTarefa(convites.get(i).getTarefa());
+                    convites.remove(i);
+                    break;
+                }
+                else{
+                    break;
+                }
             }
             case 10:{
                 break;
