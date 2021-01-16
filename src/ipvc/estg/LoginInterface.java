@@ -62,6 +62,8 @@ public class LoginInterface extends JFrame implements ActionListener {
                 classNotFoundException.printStackTrace();
             } catch (ParseException parseException) {
                 parseException.printStackTrace();
+            } catch (Exception exception) {
+                exception.printStackTrace();
             }
         });
         panel.add(button);
@@ -80,7 +82,7 @@ public class LoginInterface extends JFrame implements ActionListener {
 
 
 
-    public void login() throws DataFormatException, IOException, ClassNotFoundException, ParseException {
+    public void login() throws Exception {
 
         int op=0;
         Scanner scan = new Scanner(System.in);

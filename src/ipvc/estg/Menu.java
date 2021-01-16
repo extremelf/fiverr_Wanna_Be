@@ -7,5 +7,5 @@ import java.util.zip.DataFormatException;
 
 public interface Menu {
     void show();
-    Utilizador choose(int op, Utilizador autenticado, ArrayList<Utilizador> utilizadores,ArrayList<Convite> convites) throws DataFormatException, IOException, ParseException;
+    Utilizador choose(int op, Utilizador autenticado, ArrayList<Utilizador> utilizadores,ArrayList<Convite> convites) throws IOException, DataFormatException, Exception;
 }

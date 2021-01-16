@@ -11,10 +11,11 @@ public class Utilizador implements Serializable {
     private String userName;
     private String nome;
     private String password;
+    private boolean isAdmin;
     private int idade;
     private String profissao;
     private String contacto;
-    private int rating ;
+    private int rating;
     private int horasDiarias;
     private int tarefasRealizadas;
     private int projetosRealizados;
@@ -32,14 +33,30 @@ public class Utilizador implements Serializable {
         this.profissao=profissao;
         this.userName=userName;
         this.contacto = contacto;
+        this.isAdmin=false;
     }
 
-    public Menu getMenu(){
-        return new UserMenu();
+    public Menu getMenu(){return new UserMenu();
     }
 
     public boolean Login(String username, String password){
         return this.correctUsername(username) && this.correctPassword(password);
+    }
+
+
+    public void save(String filename) throws IOException, FileNotFoundException {
+        try{
+            FileOutputStream fos = new FileOutputStream("utilizadores.tmp",true);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(this);
+
+            oos.flush();
+            oos.close();
+
+            fos.close();
+        }catch(IOException e){
+            e.printStackTrace();
+        }
     }
 
     public void AlterarDados(int op){
@@ -82,24 +99,6 @@ public class Utilizador implements Serializable {
 
         }
     }
-    public void save(String filename) throws IOException, FileNotFoundException {
-        try{
-            FileOutputStream fos = new FileOutputStream("utilizadores.tmp",true);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(this);
-
-            oos.flush();
-            oos.close();
-
-            fos.close();
-        }catch(IOException e){
-            e.printStackTrace();
-        }
-    }
-
-    public void novaTarefa(tarefa novaTarefa) {
-        this.tarefas.add(novaTarefa);
-    }
 
     public ArrayList<tarefa> getTarefas() {
         return tarefas;
@@ -109,10 +108,23 @@ public class Utilizador implements Serializable {
         this.tarefas = tarefas;
     }
 
+    public String toStringReduzido(){
+        if(!this.isAdmin()){
+            return "Username: "+userName+" Nome: "+nome+" Profissão: "+profissao+"\n";
+        }
+        else{
+            return null;
+        }
+    }
+
     @Override
     public String toString(){
        return "Username: "+userName+" Password: "+password+" Nome: "+nome+" Profissão: "+profissao+" Contacto: "+contacto+"\n";
     }
+    public void novaTarefa(tarefa novaTarefa) {
+        this.tarefas.add(novaTarefa);
+    }
+
     public boolean correctUsername(String username){
         return this.userName.equals(username);
     }
@@ -200,7 +212,16 @@ public class Utilizador implements Serializable {
     public void setProjetosRealizados(int projetosRealizados) {
         this.projetosRealizados = projetosRealizados;
     }
-    public void addUtilizador(String userName,String nome,String password, String profissao, String contacto ){
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
+    }
+
+    public void addUtilizador(String userName, String nome, String password, String profissao, String contacto ){
 
 
 

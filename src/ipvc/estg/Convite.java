@@ -1,14 +1,12 @@
 package ipvc.estg;
 
 public class Convite {
-    private static int indice=0;
     private int num;
     private String autor;
     private String convidado;
     private tarefa tarefa;
 
     public Convite(String autor,String convidado,tarefa tarefa){
-        this.num = indice++;
         this.autor = autor;
         this.convidado = convidado;
         this.tarefa = tarefa;

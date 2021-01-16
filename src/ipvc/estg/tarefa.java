@@ -47,7 +47,7 @@ public class tarefa {
         String str;
         String str1 = "Num"+getNum()+"\nNome: "+getNome()+"\nDescrição: "+getDescricao()+"\nAutor: "+getAutor()+"\nData/Hora Inicio: "+getDataHoraInicio();
         if(getDataHorafim()!=null){
-            String str2 = "Data/Hora Fim: "+getDataHorafim();
+            String str2 = "\nData/Hora Fim: "+getDataHorafim();
             str = str1.concat(str2);
         }
         else{
@@ -64,10 +64,11 @@ public class tarefa {
         this.numProjeto = numProjeto;
     }
 
+    public void terminarTarefa(){
+        this.DataHorafim = new Date();
+    }
+
     public void terminarTarefa(Date fim) throws Exception {
-        if(fim==null){
-            this.DataHorafim = new Date();
-        }
         if(dataHoraInicio.after(fim)){
             throw new Exception(String.format("A data de ínicio (%s) deve ser anterior à data de fim (%s)", dataHoraInicio, fim));
         }

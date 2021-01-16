@@ -2,12 +2,21 @@ package ipvc.estg;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Scanner;
+import java.util.*;
 
 public class UserMenu implements Menu{
+    public static int inputInt(String out, Scanner scan){
+        System.out.println(out);
+        try{
+            return scan.nextInt();
+        }
+        catch(InputMismatchException e){
+            System.out.println("Input errado, introduza um número!");
+            scan.next();
+            return inputInt(out,scan);
+        }
+    }
+
     @Override
     public void show(){
         System.out.println("Menu");
@@ -27,7 +36,7 @@ public class UserMenu implements Menu{
     }
 
     @Override
-    public Utilizador choose(int op, Utilizador autenticado, ArrayList<Utilizador> utilizadores,ArrayList<Convite> convites) throws ParseException {
+    public Utilizador choose(int op, Utilizador autenticado, ArrayList<Utilizador> utilizadores,ArrayList<Convite> convites) throws Exception {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyy HH:mm");
 
         Scanner scan = new Scanner(System.in);
@@ -77,36 +86,88 @@ public class UserMenu implements Menu{
                 Date dataAdd = null;
                 if(!dataInicio.isBlank()){
                     dataAdd = format.parse(dataInicio);
+                    autenticado.novaTarefa(new tarefa(autenticado.getUserName(), nomeadd, descricaoadd, dataAdd));
                 }
-
-                //System.out.println("Numero do projeto: ");
-               // String projetoNumAdd = scan.nextLine();
-                /*
-
-                  PODES ADICIONAR AQUI O STRING FORMAT PARA O USER INSERIR UMA DATA, EU LEMBRO ME DE FALARES MAS NAO SEI COMO SE FAZ
-
-                  System.out.println("---------");
-                System.out.println("Contacto: ");
-                String contactadd = scan.nextLine();
-                */
-               // if(projetoNumAdd.isEmpty()){
-                    if(dataAdd!=null){
-                        autenticado.novaTarefa(new tarefa(autenticado.getUserName(), nomeadd, descricaoadd, dataAdd));
-                        //autenticado.tarefas.add(new tarefa(autenticado.getUserName(), nomeadd, descricaoadd, dataAdd));
-                    }
-                    else{
-                        autenticado.novaTarefa(new tarefa(autenticado.getUserName(), nomeadd, descricaoadd));
-                        //autenticado.tarefas.add(new tarefa(autenticado.getUserName(), nomeadd, descricaoadd));
-                    }
-               // }
-                                //tarefas.add(new tarefas(projetoNumAdd, nomeadd, descricaoadd, new Date(), new Date()));
-
+                else{
+                    autenticado.novaTarefa(new tarefa(autenticado.getUserName(), nomeadd, descricaoadd));
+                }
                 break;
             }
             case 5:{
                 for(int k = 0;k<autenticado.getTarefas().size();k++){
                     System.out.println(autenticado.getTarefas().get(k).toString());
                 }
+                System.out.println("Selecione a tarefa a alterar:");
+                int alterarTarefa = scan.nextInt();
+                scan.nextLine();
+                if(autenticado.getTarefas().get(alterarTarefa)!=null){
+                    String menuAlterarTarefa = "-------------------\n1 - Convidar utilizador\n2 - Apagar Tarefa\n3 - Associar a projeto\n4 - Terminar tarefa\n-------------------\n";
+                    int alterarTarefa2;
+                    alterarTarefa2=inputInt(menuAlterarTarefa,scan);
+                    scan.nextLine();
+
+                    switch(alterarTarefa2){
+                        case 1:{
+                            if(autenticado.getTarefas().get(alterarTarefa).isAuthor(autenticado.getUserName())) {
+                                for(Utilizador utilizadore : utilizadores){
+                                    if(utilizadore.toStringReduzido()!=null){
+                                        System.out.println(utilizadore.toStringReduzido());
+                                    }
+                                }
+                                System.out.println("username do utilizador a convidar:");
+                                String convidado = scan.nextLine();
+
+                                for (Utilizador utilizadore : utilizadores) {
+                                    if (utilizadore.getUserName().equals(convidado)) {
+                                        convites.add(new Convite(autenticado.getUserName(), utilizadore.getUserName(), autenticado.getTarefas().get(alterarTarefa)));
+                                        break;
+                                    }
+                                }
+                                System.out.println("Utilizador não encontrado");
+                                break;
+                            }
+                            else{
+                                System.out.println("Sem permissão para realizar convites na tarefa selecionada");
+                                break;
+                            }
+                        }
+                        case 2:{
+                            if(autenticado.getTarefas().get(alterarTarefa).isAuthor(autenticado.getUserName())){
+                                int opApagar=0;
+                                do{
+                                    opApagar=inputInt("Confirmação:\n1 - Apagar\n2 - Cancelar",scan);
+                                    switch(opApagar){
+                                        case 1:{
+                                            autenticado.getTarefas().remove(alterarTarefa);
+                                        }
+                                        case 2:{
+                                            System.out.println("Cancelado com sucesso");
+                                        }
+                                        default:{
+                                            System.out.println("Existem apenas 2 opçoes");
+                                        }
+                                    }
+                                }while(opApagar!=2);
+                            }
+                            else{
+                                System.out.println("Sem permissão para realizar convites na tarefa selecionada");
+                            }
+                        }
+                        case 4:{
+                            System.out.println("Data de inicio: (DD/MM/YYYY HH:mm)");
+                            String dataFim = scan.nextLine();
+                            Date dataFimAdd = null;
+                            if(!dataFim.isBlank()){
+                                dataFimAdd = format.parse(dataFim);
+                                autenticado.getTarefas().get(alterarTarefa).terminarTarefa(dataFimAdd);
+                            }
+                            else{
+                                autenticado.getTarefas().get(alterarTarefa).terminarTarefa();
+                            }
+                        }
+                    }
+                }
+
             }
             case 6:{
                 break;
@@ -114,49 +175,32 @@ public class UserMenu implements Menu{
             case 7:{
                 break;
             }
-            case 8:{
-                /**
-                 * Isto deve passar para dentro do submenu de "alterar tarefa" porque senão tem de listar as tarefas e selecionar uma e na parte de "alterar tarefa" ele já o irá fazer
-                 */
-                for(int k = 0;k<autenticado.getTarefas().size();k++){
-                    System.out.println(autenticado.getTarefas().get(k).toString());
-                }
-                System.out.println("Qual o numero da tarefa a fazer convite");
-                int k = scan.nextInt();
-
-                scan.nextLine();
-
-                System.out.println("username do utilizador a convidar:");
-                String convidado = scan.nextLine();
-
-                for(Utilizador utilizadore : utilizadores){
-                    if(convidado.equals(utilizadore.getUserName()));
-                        convites.add(new Convite(autenticado.getUserName(),utilizadore.getUserName(),autenticado.getTarefas().get(k)));
-                        //convites.add(new Convite(autenticado.getUserName(),utilizadore.getUserName(),autenticado.tarefas.get(k)));
-                }
-                break;
-            }
             case 9:{
                 int i = 0;
+                int contador = 0;
                 System.out.println("Convites Recebidos:");
-                for (Convite convite : convites) {
-                    if (convite.getConvidado().equals(autenticado.getUserName())) {
+                for (int k = 0; k<convites.size();k++) {
+                    if (autenticado.getUserName().equals(convites.get(k).getConvidado())) {
                         System.out.println("---------------");
-                        System.out.println(convite.toString());
+                        System.out.println(k);
+                        System.out.println(convites.get(k).toString());
                         System.out.println("---------------");
+                        contador++;
                     }
                 }
-                System.out.println("Deseja aceitar algum convite?");
-                String resposta = scan.nextLine();
-                if(resposta.equalsIgnoreCase("SIM")){
-                    System.out.println("Introduza o numero do convite:");
-                    i = scan.nextInt();
-                    autenticado.novaTarefa(convites.get(i).getTarefa());
-                    convites.remove(i);
-                    break;
-                }
-                else{
-                    break;
+                if(contador!=0){
+                    System.out.println("Deseja aceitar algum convite?");
+                    String resposta = scan.nextLine();
+                    if(resposta.equalsIgnoreCase("sim")){
+                        System.out.println("Introduza o numero do convite:");
+                        i = scan.nextInt();
+                        autenticado.novaTarefa(convites.get(i).getTarefa());
+                        convites.remove(i);
+                        break;
+                    }
+                    else{
+                        break;
+                    }
                 }
             }
             case 10:{
