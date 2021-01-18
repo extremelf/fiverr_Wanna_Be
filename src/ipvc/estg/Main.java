@@ -47,13 +47,9 @@ public class Main {
             init.save("utilizadores.tmp");
             init =new Admin("admin1", "admin1", "admin1", "admin", "admin");
             utilizadores.add(init);
-
-            utilizadores.add(new Utilizador("luis","Luís","1234","estudante","lpaulofernandes@ipvc.pt"));
-            utilizadores.add(new Utilizador("jorge","Jorge","1234","estudante","jorge@gmail.com"));
-
             init.save("utilizadores.tmp");
             init.save("utilizadores.tmp");
-      //  }
+        //}
 
         do {
 
@@ -108,4 +104,8 @@ public class Main {
             return inputInt(out,scan);
         }
     }
+
+
+    //new LoginInterface();
+
 }

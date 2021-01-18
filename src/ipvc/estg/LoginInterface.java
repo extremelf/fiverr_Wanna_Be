@@ -51,7 +51,7 @@ public class LoginInterface extends JFrame implements ActionListener {
         button = new JButton("Login");
         button.setBounds(10, 80, 80, 25);
         button.addActionListener(e-> {
-            try {
+        /*    try {
                 login();
             } catch (DataFormatException dataFormatException) {
                 dataFormatException.printStackTrace();
@@ -64,7 +64,7 @@ public class LoginInterface extends JFrame implements ActionListener {
                 parseException.printStackTrace();
             } catch (Exception exception) {
                 exception.printStackTrace();
-            }
+            }*/
         });
         panel.add(button);
 

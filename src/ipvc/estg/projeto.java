@@ -2,6 +2,7 @@ package ipvc.estg;
 
 public abstract class projeto {
 
+    private String nomep;
     private String nomeCliente;
     private String nome;
     private int precoHora;

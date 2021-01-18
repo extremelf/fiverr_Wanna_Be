@@ -24,8 +24,8 @@ public class AdminMenu implements Menu{
     public Utilizador choose(int op, Utilizador autenticado, ArrayList<Utilizador> utilizadores,ArrayList<Convite> convites) throws IOException, DataFormatException {
         //File dataUsersFile = new File("C:\\Users\\Utilizador\\JavaProjectsPII\\fiverr_Wanna_Be\\dadosUtilizadores.txt");
         //File dataUsersFile = new File("C:\\Users\\mingo\\Desktop\\utilizadores.tmp");
-        String dataUserFile = "C:\\<Users\\mingo\\Desktop\\utilizadores.tmp";
-        //String dataUserFile = "C:\\Users\\Utilizador\\JavaProjectsPII\\fiverr_Wanna_Be\\dadosUtilizadores.txt"
+        //String dataUserFile = "C:\\<Users\\mingo\\Desktop\\utilizadores.tmp";
+        String dataUserFile = "C:\\Users\\Utilizador\\JavaProjectsPII\\fiverr_Wanna_Be\\dadosUtilizadores.txt";
         /**
          * Troca o path name sempre que fores correr e mete o meu em comentario
          */
@@ -106,6 +106,9 @@ public class AdminMenu implements Menu{
                 for(int k = 0; k < utilizadores.size(); k++){
                     if(utilizadores.get(k).correctUsername(user)){
                         utilizadores.remove(k);
+                        System.out.println("Utilizador removido com sucesso");
+                    } else {
+                        System.out.println("Utilizador não existente");
                     }
                 }
                 break;

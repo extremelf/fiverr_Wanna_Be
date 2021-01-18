@@ -15,6 +15,7 @@ public class tarefa {
     private Date dataHoraInicio;
     private Date DataHorafim;
     private String autor;
+    public tarefaStatus tarefastatus = tarefaStatus.OPEN;
     //ArrayList<String> convidados;
 
     /**
@@ -45,7 +46,7 @@ public class tarefa {
     @Override
     public String toString(){
         String str;
-        String str1 = "Num"+getNum()+"\nNome: "+getNome()+"\nDescrição: "+getDescricao()+"\nAutor: "+getAutor()+"\nData/Hora Inicio: "+getDataHoraInicio();
+        String str1 = "Num"+getNum()+"\nNome: "+getNome()+"\nDescrição: "+getDescricao()+"\nAutor: "+getAutor()+"\nData/Hora Inicio: "+getDataHoraInicio()+ "\nEstado tarefa: "+tarefastatus;
         if(getDataHorafim()!=null){
             String str2 = "\nData/Hora Fim: "+getDataHorafim();
             str = str1.concat(str2);
@@ -75,6 +76,7 @@ public class tarefa {
         else{
             this.DataHorafim = fim;
         }
+        this.tarefastatus = tarefaStatus.CLOSED;
     }
 
     public int getNum() {

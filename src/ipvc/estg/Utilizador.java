@@ -96,6 +96,11 @@ public class Utilizador implements Serializable {
                 this.setContacto(input);
                 break;
             }
+            case 6:{
+                System.out.println("Horas de trabalho diarias:");
+                input= String.valueOf(scan.nextInt());
+                this.setHorasDiarias(horasDiarias);
+            }
 
         }
     }
@@ -179,6 +184,7 @@ public class Utilizador implements Serializable {
 
     public void setContacto(String contacto) {
         this.contacto = contacto;
+
     }
 
     public int getRating() {
