@@ -1,13 +1,12 @@
 package ipvc.estg;
 
+import java.io.*;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.zip.DataFormatException;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+
 import jdk.jshell.execution.Util;
 
 
@@ -25,31 +24,34 @@ public class Main {
         Utilizador autenticado;
         autenticado = null;
         boolean res = false;
-        File users = new File("utilizadores.tmp");
-        /*if(users.exists() && !users.isDirectory()){
+        File users = new File("utilizadores.dat");
+      //função para ler
+        if(users.exists() && !users.isDirectory()){
             try{
-                FileInputStream readData = new FileInputStream("utilizadores.tmp");
+                FileInputStream readData = new FileInputStream("utilizadores.dat");
                 ObjectInputStream readStream = new ObjectInputStream(readData);
-
-                //ArrayList<Utilizador> utilizadores = (ArrayList<Utilizador>) readStream.readObject();
+                utilizadores = (ArrayList<Utilizador>) readStream.readObject();
                 readStream.close();
-                System.out.println(utilizadores.toString());
+                //System.out.println(utilizadores.toString());
+                for (int k = 0; k < utilizadores.size(); k++) {
+                    for (int u = 0; u < utilizadores.get(k).getTarefas().size(); u++) {
+                        System.out.println(utilizadores.get(k).getTarefas().get(u).toString());
+                    }
+                }
             }catch(Exception e){
                 e.printStackTrace();
             }
-        }*/
+        }
 
-        //if(!users.exists() && !users.isDirectory()){
+        if(!users.exists() && !users.isDirectory()){
             //ArrayList<Utilizador> utilizadores =  new ArrayList<>();
             Admin init;
             init = new Admin("admin", "admin", "admin", "admin", "admin");
             utilizadores.add(init);
-            init.save("utilizadores.tmp");
             init =new Admin("admin1", "admin1", "admin1", "admin", "admin");
             utilizadores.add(init);
-            init.save("utilizadores.tmp");
-            init.save("utilizadores.tmp");
-        //}
+
+        }
 
         do {
 
@@ -87,6 +89,18 @@ public class Main {
                 }
                 case 0: {
                     System.out.println("Adeus");
+                    try{
+                        FileOutputStream fos = new FileOutputStream("utilizadores.dat",false);
+                        ObjectOutputStream oos = new ObjectOutputStream(fos);
+                        oos.writeObject(utilizadores);
+
+                        oos.flush();
+                        oos.close();
+
+                        fos.close();
+                    }catch(IOException e){
+                        e.printStackTrace();
+                    }
                 }
             }
         }while(op1!=0);

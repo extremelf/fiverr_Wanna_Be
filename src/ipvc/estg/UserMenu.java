@@ -101,7 +101,7 @@ public class UserMenu implements Menu{
                 int alterarTarefa = scan.nextInt();
                 scan.nextLine();
                 if(autenticado.getTarefas().get(alterarTarefa)!=null){
-                    String menuAlterarTarefa = "-------------------\n1 - Convidar utilizador\n2 - Apagar Tarefa\n3 - Associar a projeto\n4 - Terminar tarefa\n-------------------\n";
+                    String menuAlterarTarefa = "-------------------\n1 - Convidar utilizador\n2 - Apagar Tarefa\n3 - Associar a projeto\n4 - Terminar tarefa\n0 - Sair\n -------------------\n";
                     int alterarTarefa2;
                     alterarTarefa2=inputInt(menuAlterarTarefa,scan);
                     scan.nextLine();
@@ -152,18 +152,26 @@ public class UserMenu implements Menu{
                             else{
                                 System.out.println("Sem permissão para realizar convites na tarefa selecionada");
                             }
+                            break;
                         }
                         case 4:{
-                            System.out.println("Data de inicio: (DD/MM/YYYY HH:mm)");
-                            String dataFim = scan.nextLine();
-                            Date dataFimAdd = null;
-                            if(!dataFim.isBlank()){
-                                dataFimAdd = format.parse(dataFim);
-                                autenticado.getTarefas().get(alterarTarefa).terminarTarefa(dataFimAdd);
+                            if (autenticado.getTarefas().get(alterarTarefa).getDataHorafim()!=null) {
+                                System.out.println("Data de inicio: (DD/MM/YYYY HH:mm)");
+                                String dataFim = scan.nextLine();
+                                Date dataFimAdd = null;
+                                if (!dataFim.isBlank()) {
+                                    dataFimAdd = format.parse(dataFim);
+                                    autenticado.getTarefas().get(alterarTarefa).terminarTarefa(dataFimAdd);
+                                } else {
+                                    autenticado.getTarefas().get(alterarTarefa).terminarTarefa();
+                                }
+                            } else {
+                                System.out.println("Tarefa já está terminada");
                             }
-                            else{
-                                autenticado.getTarefas().get(alterarTarefa).terminarTarefa();
-                            }
+                            break;
+                        }
+                        case 0:{
+                            break;
                         }
                     }
                 }

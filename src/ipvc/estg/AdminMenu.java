@@ -70,7 +70,7 @@ public class AdminMenu implements Menu{
                 Utilizador tmp = null;
                 tmp = new Utilizador(useradd, nomeadd, passwordaad, profissaoadd, contactadd);
                 utilizadores.add(tmp);
-                tmp.save(dataUserFile);
+
 
 
 

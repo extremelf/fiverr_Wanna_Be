@@ -1,10 +1,11 @@
 package ipvc.estg;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class tarefa {
+public class tarefa implements Serializable {
 
     private static int contador=0;
 
@@ -67,6 +68,7 @@ public class tarefa {
 
     public void terminarTarefa(){
         this.DataHorafim = new Date();
+        this.tarefastatus = tarefaStatus.CLOSED;
     }
 
     public void terminarTarefa(Date fim) throws Exception {
