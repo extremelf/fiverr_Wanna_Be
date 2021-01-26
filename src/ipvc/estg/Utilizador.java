@@ -19,9 +19,9 @@ public class Utilizador implements Serializable {
     private int horasDiarias;
     private int tarefasRealizadas;
     private int projetosRealizados;
+    private float precoDefault;
     private ArrayList<tarefa> tarefas = new ArrayList<>();
-    //private privilegio privilegio = ipvc.estg.privilegio.UTILIZADOR;
-
+    private ArrayList<projeto> projetos = new ArrayList<>();
 
 
     public Utilizador(String userName,String nome,String password, String profissao, String contacto) {
@@ -30,9 +30,21 @@ public class Utilizador implements Serializable {
         this.projetosRealizados = 0;
         this.nome = nome;
         this.password = password;
-        this.profissao=profissao;
-        this.userName=userName;
+        this.profissao = profissao;
+        this.userName = userName;
         this.contacto = contacto;
+        this.isAdmin=false;
+    }
+    public Utilizador(String userName,String nome,String password, String profissao, String contacto,float precoDefault) {
+        this.rating = 0;
+        this.tarefasRealizadas = 0;
+        this.projetosRealizados = 0;
+        this.nome = nome;
+        this.password = password;
+        this.profissao = profissao;
+        this.userName = userName;
+        this.contacto = contacto;
+        this.precoDefault=precoDefault;
         this.isAdmin=false;
     }
 
@@ -105,14 +117,6 @@ public class Utilizador implements Serializable {
         }
     }
 
-    public ArrayList<tarefa> getTarefas() {
-        return tarefas;
-    }
-
-    public void setTarefas(ArrayList<tarefa> tarefas) {
-        this.tarefas = tarefas;
-    }
-
     public String toStringReduzido(){
         if(!this.isAdmin()){
             return "Username: "+userName+" Nome: "+nome+" Profissão: "+profissao+"\n";
@@ -126,8 +130,38 @@ public class Utilizador implements Serializable {
     public String toString(){
        return "Username: "+userName+" Password: "+password+" Nome: "+nome+" Profissão: "+profissao+" Contacto: "+contacto+"\n";
     }
+
+    public void novoProjeto(projeto novoProjeto){this.projetos.add(novoProjeto);}
+
     public void novaTarefa(tarefa novaTarefa) {
         this.tarefas.add(novaTarefa);
+    }
+
+    //Getters and Setters
+
+
+    public float getPrecoDefault() {
+        return precoDefault;
+    }
+
+    public void setPrecoDefault(float precoDefault) {
+        this.precoDefault = precoDefault;
+    }
+
+    public ArrayList<projeto> getProjetos() {
+        return projetos;
+    }
+
+    public void setProjetos(ArrayList<projeto> projetos) {
+        this.projetos = projetos;
+    }
+
+    public ArrayList<tarefa> getTarefas() {
+        return tarefas;
+    }
+
+    public void setTarefas(ArrayList<tarefa> tarefas) {
+        this.tarefas = tarefas;
     }
 
     public boolean correctUsername(String username){
@@ -230,11 +264,8 @@ public class Utilizador implements Serializable {
     public void addUtilizador(String userName, String nome, String password, String profissao, String contacto ){
 
 
-
-
     }
 
- // vai buscar as tarefas (?)
 
 
 }

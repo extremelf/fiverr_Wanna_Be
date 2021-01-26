@@ -17,7 +17,6 @@ public class tarefa implements Serializable {
     private Date DataHorafim;
     private String autor;
     public tarefaStatus tarefastatus = tarefaStatus.OPEN;
-    //ArrayList<String> convidados;
 
     /**
      *Acho que arranjei a forma de ter as tarefas, basicamente vai guardar o autor ( o menu a apresentar as tarefas que um utilizador tem, vai mostrar as criadas por ele e as convidado

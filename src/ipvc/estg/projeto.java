@@ -1,13 +1,71 @@
 package ipvc.estg;
 
-public abstract class projeto {
+import java.io.Serializable;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
-    private String nomep;
+public class projeto implements Serializable {
+
+    private String nomeProjeto;
     private String nomeCliente;
-    private String nome;
-    private int precoHora;
-    private int numProjeto;
+    private String autor;
+    private String nomeCriador;
+    private float precoHora;
+    private ArrayList<tarefa> tarefas = new ArrayList<>();
+    private ArrayList<String> convidados = new ArrayList<>();
 
+    public projeto (String nomeProjeto, String nomeCliente, String autor, String nomeCriador,float precoHora){
+        this.nomeProjeto = nomeProjeto;
+        this.nomeCliente = nomeCliente;
+        this.autor = autor;
+        this.nomeCriador = nomeCriador;
+        this.precoHora = precoHora;
+    }
+
+    public void novaTarefa(tarefa novaTarefa) {
+        this.tarefas.add(novaTarefa);
+    }
+
+    @Override
+    public String toString(){
+        return "\nNome do Projeto: "+getNomeProjeto()+"\nNome do Cliente: "+getNomeCliente()+"\nPreço por hora: "+getPrecoHora();
+    }
+
+    public boolean isAuthor(String username){
+        return this.autor.equals(username);
+    }
+
+    public String toStringConvidados(int n){
+        return "\nUsername: "+getConvidados().get(n);
+    }
+    public void novoConvidado(String convidado){this.convidados.add(convidado);}
+
+//Getters and Setters
+
+
+    public String getAutor() {
+        return autor;
+    }
+
+    public void setAutor(String autor) {
+        this.autor = autor;
+    }
+
+    public ArrayList<String> getConvidados() {
+        return convidados;
+    }
+
+    public void setConvidados(ArrayList<String> convidados) {
+        this.convidados = convidados;
+    }
+
+    public ArrayList<tarefa> getTarefas() {
+        return tarefas;
+    }
+
+    public void setTarefas(ArrayList<tarefa> tarefas) {
+        this.tarefas = tarefas;
+    }
 
     public String getNomeCliente() {
         return nomeCliente;
@@ -17,27 +75,27 @@ public abstract class projeto {
         this.nomeCliente = nomeCliente;
     }
 
-    public String getNome() {
-        return nome;
+    public String getNomeCriador() {
+        return nomeCriador;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setNomeCriador(String nomeCriador) {
+        this.nomeCriador = nomeCriador;
     }
 
-    public int getPrecoHora() {
+    public float getPrecoHora() {
         return precoHora;
     }
 
-    public void setPrecoHora(int precoHora) {
+    public void setPrecoHora(float precoHora) {
         this.precoHora = precoHora;
     }
 
-    public int getNumProjeto() {
-        return numProjeto;
+    public String getNomeProjeto() {
+        return nomeProjeto;
     }
 
-    public void setNumProjeto(int numProjeto) {
-        this.numProjeto = numProjeto;
+    public void setNomeProjeto(String nomeProjeto) {
+        this.nomeProjeto = nomeProjeto;
     }
 }

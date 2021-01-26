@@ -33,11 +33,11 @@ public class Main {
                 utilizadores = (ArrayList<Utilizador>) readStream.readObject();
                 readStream.close();
                 //System.out.println(utilizadores.toString());
-                for (int k = 0; k < utilizadores.size(); k++) {
+               /* for (int k = 0; k < utilizadores.size(); k++) {
                     for (int u = 0; u < utilizadores.get(k).getTarefas().size(); u++) {
                         System.out.println(utilizadores.get(k).getTarefas().get(u).toString());
                     }
-                }
+                }*/
             }catch(Exception e){
                 e.printStackTrace();
             }
@@ -86,6 +86,38 @@ public class Main {
                         autenticado = autenticado.getMenu().choose(op, autenticado, utilizadores, convites);
                         scan.nextLine();
                     } while (autenticado != null);
+                    break;
+                }
+                case 2:{
+                    scan.nextLine();
+                    System.out.println("Criar um utilizador");
+                    System.out.println(" Insira o USERNAME do utilizador a ser criado:");
+                    String useradd = scan.nextLine();
+                    System.out.println("---------");
+                    for (int u = 0; u < utilizadores.size(); u++) {                 //
+                        //
+                        if (utilizadores.get(u).correctUsername(useradd)) {         // ESTE CICLO FUNCIONA MAS A EXCEPTION ACABA COM O PROGRAMA E ISSO NAO É O DESEJADO XD
+                            throw new DataFormatException("Utilizador já existe");  //
+                        }                                                           //
+                    }                                                               //
+                    System.out.println("Password a inserir: ");
+                    String passwordaad = scan.nextLine();
+                    System.out.println("---------");
+                    System.out.println("Nome: ");
+                    String nomeadd = scan.nextLine();
+                    System.out.println("---------");
+                    System.out.println("Profissao: ");
+                    String profissaoadd = scan.nextLine();
+                    System.out.println("---------");
+                    System.out.println("email: ");
+                    String contactadd = scan.nextLine();
+                    System.out.println("---------");
+                    float precoDefaultadd;
+                    precoDefaultadd = inputFloat("Preço por hora default: ",scan);
+                    Utilizador tmp;
+                    tmp = new Utilizador(useradd, nomeadd, passwordaad, profissaoadd, contactadd,precoDefaultadd);
+                    utilizadores.add(tmp);
+                    break;
                 }
                 case 0: {
                     System.out.println("Adeus");
@@ -116,6 +148,17 @@ public class Main {
             System.out.println("Input errado, introduza um número!");
             scan.next();
             return inputInt(out,scan);
+        }
+    }
+    public static float inputFloat(String out, Scanner scan){
+        System.out.println(out);
+        try{
+            return scan.nextFloat();
+        }
+        catch(InputMismatchException e){
+            System.out.println("Input errado, introduza um float!");
+            scan.next();
+            return inputFloat(out,scan);
         }
     }
 

@@ -22,13 +22,6 @@ public class AdminMenu implements Menu{
 
     @Override
     public Utilizador choose(int op, Utilizador autenticado, ArrayList<Utilizador> utilizadores,ArrayList<Convite> convites) throws IOException, DataFormatException {
-        //File dataUsersFile = new File("C:\\Users\\Utilizador\\JavaProjectsPII\\fiverr_Wanna_Be\\dadosUtilizadores.txt");
-        //File dataUsersFile = new File("C:\\Users\\mingo\\Desktop\\utilizadores.tmp");
-        //String dataUserFile = "C:\\<Users\\mingo\\Desktop\\utilizadores.tmp";
-        String dataUserFile = "C:\\Users\\Utilizador\\JavaProjectsPII\\fiverr_Wanna_Be\\dadosUtilizadores.txt";
-        /**
-         * Troca o path name sempre que fores correr e mete o meu em comentario
-         */
         Scanner scan = new Scanner(System.in);
         int i=1;
         switch(op){
@@ -67,27 +60,9 @@ public class AdminMenu implements Menu{
                  * NO CASO DO EMAIL TERIAMOS DE VERIFICAR SE NA STRING EXISTE '@' PARA SER UM EMAIL VALIDO
                  * DIZ ME O QUE ACHAS DEPOIS POR MENSAGEM OU ESCREVE TB AÍ EM COMENTARIO
                  */
-                Utilizador tmp = null;
+                Utilizador tmp;
                 tmp = new Utilizador(useradd, nomeadd, passwordaad, profissaoadd, contactadd);
                 utilizadores.add(tmp);
-
-
-
-
-                //
-                 //* TENTATIVA DE COLOCAR A GUARDAR EM FICHEIRO
-                 //* ele dá um simples erro por causa de uma exception, podes descomentar para veres, o problema está na linha 79 com o 'charSequence'
-                 //FileWriter fileWr = new FileWriter(dataUsersFile, true);
-                 //BufferedWriter fileBw = new BufferedWriter(fileWr);
-                 //PrintWriter filePw = new PrintWriter(fileBw);
-                // filePw.append("\n");
-                 //filePw.append((CharSequence) new Utilizador(useradd, nomeadd, passwordaad, profissaoadd, contactadd));
-                 //filePw.close();
-                //filePw.write("A sample string to be written at the end of the file!\n");
-                 //* DEPOIS PARA LER FUNCIONA DA MESMA FORMA MAS COM UM FileReader
-                //filePw.close();
-
-
                 break;
             }
             case 2:{

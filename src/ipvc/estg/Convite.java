@@ -1,15 +1,14 @@
 package ipvc.estg;
 
 public class Convite {
-    private int num;
     private String autor;
     private String convidado;
-    private tarefa tarefa;
+    private projeto projeto;
 
-    public Convite(String autor,String convidado,tarefa tarefa){
+    public Convite(String autor,String convidado,projeto projeto){
         this.autor = autor;
         this.convidado = convidado;
-        this.tarefa = tarefa;
+        this.projeto = projeto;
     }
 
     public boolean isInvited(String convidado){
@@ -18,15 +17,7 @@ public class Convite {
 
     @Override
     public String toString(){
-        return "Num: "+getNum()+"\nAutor: "+getAutor()+"\nNome da Tarefa: "+getTarefa().getNome();
-    }
-
-    public int getNum() {
-        return num;
-    }
-
-    public void setNum(int num) {
-        this.num = num;
+        return "\nAutor: "+getAutor()+"\nNome do Projeto: "+getProjeto().getNomeProjeto();
     }
 
     public boolean isAuthor(String autor){
@@ -49,11 +40,11 @@ public class Convite {
         this.convidado = convidado;
     }
 
-    public ipvc.estg.tarefa getTarefa() {
-        return tarefa;
+    public ipvc.estg.projeto getProjeto() {
+        return projeto;
     }
 
-    public void setTarefa(ipvc.estg.tarefa tarefa) {
-        this.tarefa = tarefa;
+    public void setProjeto(ipvc.estg.projeto projeto) {
+        this.projeto = projeto;
     }
 }
