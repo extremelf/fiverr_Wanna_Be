@@ -1,6 +1,5 @@
 package ipvc.estg;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -17,6 +16,20 @@ public class UserMenu implements Menu{
         }
     }
 
+    public void eliminaProjetoConvidados(Utilizador autenticado, ArrayList<Utilizador> utilizadores, int posicao){
+        for(int xx = 0; xx < autenticado.getProjetos().get(posicao).getConvidados().size(); xx++){
+            for(Utilizador utilizadore : utilizadores){
+                if(utilizadore.getUserName().equals(autenticado.getProjetos().get(posicao).getConvidados().get(xx))){
+                    for (int xa = 0; xa < utilizadore.getProjetos().size(); xa++) {
+                        if (autenticado.getProjetos().get(posicao) == utilizadore.getProjetos().get(xa)) {
+                            utilizadore.getProjetos().remove(xa);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     @Override
     public void show(){
         System.out.println("Menu");
@@ -25,11 +38,8 @@ public class UserMenu implements Menu{
         System.out.println(" 3  - Alterar projeto");
         System.out.println(" 4  - Criar tarefa");
         System.out.println(" 5  - Alterar tarefa");
-        System.out.println(" 6  - Remover tarefas");
         System.out.println(" 7  - Listar tarefas por intervalo");
-        System.out.println(" 8  - Convidar utilizador");
         System.out.println(" 9  - Listar convites");
-        System.out.println(" 10 - Alterar convidados");
         System.out.println(" 11 - Imprimir relatorio pessoal do mês");
         System.out.println(" 12 - Imprimir relatorio mensal");
         System.out.println(" 0  - LOGOUT");
@@ -74,7 +84,11 @@ public class UserMenu implements Menu{
                 String nomeCadd = scan.nextLine();
                 System.out.println("---------");
                 System.out.println("Preço por hora: (nada para preço default)");
-                float precoPorHoraadd = scan.nextFloat();
+                String precoadd = scan.nextLine();
+                float precoPorHoraadd = 0.0f;
+                if(precoadd!=null){
+                    precoPorHoraadd = Float.parseFloat(precoadd);
+                }
 
                 if(precoPorHoraadd!=0.0f){
                     autenticado.novoProjeto(new projeto(nomePadd,nomeCadd,autenticado.getUserName(),autenticado.getNome(),precoPorHoraadd));
@@ -85,77 +99,108 @@ public class UserMenu implements Menu{
                 break;
             }
             case 3:{
-                for(int j = 0;j < autenticado.getProjetos().size();j++){
-                    System.out.println(autenticado.getProjetos().get(j).toString());
-                }
-                System.out.println();
-                int alterarProjeto;
-                alterarProjeto = inputInt("Selecione Projeto a alterar: ",scan);
-                scan.nextLine();
-
-                if(autenticado.getProjetos().get(alterarProjeto)!=null){
                     int alterarProjeto2;
-                    alterarProjeto2 = inputInt("-------------------\n1 - Convidar Utilizador\n2 - Remover Projeto\n3 - Remover Convidados\n-------------------",scan);
-                    switch (alterarProjeto2){
-                        case 1:{
-                            if(autenticado.getProjetos().get(alterarProjeto).isAuthor(autenticado.getUserName())) {
-                                for(Utilizador utilizadore : utilizadores){
-                                    if(utilizadore.toStringReduzido()!=null){
-                                        System.out.println(utilizadore.toStringReduzido());
-                                    }
-                                }
-                                scan.nextLine();
-                                System.out.println("username do utilizador a convidar:");
-                                String convidado = scan.nextLine();
+                    int alterarProjeto=999;
+                    do {
 
-                                for (Utilizador utilizadore : utilizadores) {
-                                    if (utilizadore.getUserName().equals(convidado)) {
-                                        convites.add(new Convite(autenticado.getUserName(), utilizadore.getUserName(), autenticado.getProjetos().get(alterarProjeto)));
+                        alterarProjeto2 = inputInt("-------------------\n1 - Selecionar um projeto\n2 - Convidar Utilizador\n3 - Remover Projeto\n4 - Remover Convidados\n0 - Sair\n-------------------", scan);
+                        switch (alterarProjeto2) {
+                            case 1: {
+                                for (int j = 0; j < autenticado.getProjetos().size(); j++) {
+                                    System.out.println(autenticado.getProjetos().get(j).toString());
+                                }
+                                System.out.println();
+
+                                alterarProjeto = inputInt("Selecione Projeto a alterar: (999 para cancelar)", scan);
+                                scan.nextLine();
+
+                                break;
+                            }
+                            case 2: {
+
+                                if (alterarProjeto!=999) {
+                                    if (autenticado.getProjetos().get(alterarProjeto).isAuthor(autenticado.getUserName())) {
+                                        for (Utilizador utilizadore : utilizadores) {
+                                            if (utilizadore.toStringReduzido() != null) {
+                                                System.out.println(utilizadore.toStringReduzido());
+                                            }
+                                        }
+                                        scan.nextLine();
+                                        System.out.println("username do utilizador a convidar:");
+                                        String convidado = scan.nextLine();
+
+                                        for (Utilizador utilizadore : utilizadores) {
+                                            if (utilizadore.getUserName().equals(convidado)) {
+                                                convites.add(new Convite(autenticado.getUserName(), utilizadore.getUserName(), autenticado.getProjetos().get(alterarProjeto)));
+                                                break;
+                                            }
+                                        }
+                                        System.out.println("Utilizador não encontrado");
+                                        break;
+                                    } else {
+                                        System.out.println("Sem permissão para realizar convites no projeto selecionado");
                                         break;
                                     }
                                 }
-                                System.out.println("Utilizador não encontrado");
-                                break;
-                            }
-                            else{
-                                System.out.println("Sem permissão para realizar convites no projeto selecionado");
-                                break;
-                            }
-                        }
-                        case 2:{
-                            int alterarProjeto3;
-                            alterarProjeto3=inputInt("\n1 - Eliminar todas as tarefas\n2 - Desassociar todas as tarefas",scan);
-                            scan.nextLine();
-                            if(alterarProjeto3==1){
-                                for(int xo = 0; xo < autenticado.getProjetos().get(alterarProjeto).getTarefas().size(); xo++){
-                                    autenticado.getProjetos().get(alterarProjeto).getTarefas().remove(xo);
+                                else{
+                                    System.out.println("Sem projeto selecionado");
+                                    break;
                                 }
                             }
-                            if(alterarProjeto3==2){
-                                for(int xi = 0; xi < autenticado.getProjetos().get(alterarProjeto).getTarefas().size(); xi++){
-                                    autenticado.getTarefas().add(autenticado.getProjetos().get(alterarProjeto).getTarefas().get(xi));
+                            case 3: {
+                                if (alterarProjeto!=999) {
+                                    int alterarProjeto3;
+                                    alterarProjeto3 = inputInt("\n1 - Eliminar todas as tarefas\n2 - Desassociar todas as tarefas", scan);
+                                    scan.nextLine();
+                                    if (alterarProjeto3 == 1) {
+                                        for (int xo = 0; xo < autenticado.getProjetos().get(alterarProjeto).getTarefas().size(); xo++) {
+                                            autenticado.getProjetos().get(alterarProjeto).getTarefas().remove(xo);
+                                        }
+                                        eliminaProjetoConvidados(autenticado,utilizadores,alterarProjeto);
+                                        autenticado.getProjetos().remove(alterarProjeto);
+                                        break;
+                                    }
+                                    if (alterarProjeto3 == 2) {
+                                        for (int xi = 0; xi < autenticado.getProjetos().get(alterarProjeto).getTarefas().size(); xi++) {
+                                            autenticado.getTarefas().add(autenticado.getProjetos().get(alterarProjeto).getTarefas().get(xi));
+                                        }
+                                        eliminaProjetoConvidados(autenticado,utilizadores,alterarProjeto);
+                                        autenticado.getProjetos().remove(alterarProjeto);
+                                        break;
+                                    }
+                                } else {
+                                    System.out.println("Sem projeto selecionado");
+                                    break;
                                 }
                             }
-                        }
-                        case 3:{
-                            for(int xu = 0; xu < autenticado.getProjetos().get(alterarProjeto).getConvidados().size(); xu++){
-                                System.out.println("ID Convidado: "+xu);
-                                System.out.println(autenticado.getProjetos().get(alterarProjeto).toStringConvidados(xu));
-                            }
-                            int alterarProjeto4;
-                            alterarProjeto4=inputInt("ID de convidado a remover: ",scan);
-                            for(Utilizador utilizadore: utilizadores){
-                                if(utilizadore.getUserName().equals(autenticado.getProjetos().get(alterarProjeto).getConvidados().get(alterarProjeto4))){
-                                    for(int xa = 0; xa < utilizadore.getProjetos().size(); xa++){
-                                        if(autenticado.getProjetos().get(alterarProjeto)==utilizadore.getProjetos().get(xa)){
-                                            utilizadore.getProjetos().remove(xa);
+                            case 4: {
+                                if (alterarProjeto!=999) {
+                                    for (int xu = 0; xu < autenticado.getProjetos().get(alterarProjeto).getConvidados().size(); xu++) {
+                                        System.out.println("ID Convidado: " + xu);
+                                        System.out.println(autenticado.getProjetos().get(alterarProjeto).toStringConvidados(xu));
+                                    }
+                                    int alterarProjeto4;
+                                    alterarProjeto4 = inputInt("ID de convidado a remover: ", scan);
+                                    for (Utilizador utilizadore : utilizadores) {
+                                        if (utilizadore.getUserName().equals(autenticado.getProjetos().get(alterarProjeto).getConvidados().get(alterarProjeto4))) {
+                                            for (int xa = 0; xa < utilizadore.getProjetos().size(); xa++) {
+                                                if (autenticado.getProjetos().get(alterarProjeto) == utilizadore.getProjetos().get(xa)) {
+                                                    utilizadore.getProjetos().remove(xa);
+                                                }
+                                            }
                                         }
                                     }
+                                    break;
+                                } else {
+                                    System.out.println("Sem projeto selecionado");
+                                    break;
                                 }
                             }
+                            case 0: {
+                                System.out.println("Voltando ao menu anterior");
+                            }
                         }
-                    }
-                }
+                    }while(alterarProjeto2!=0);
                 break;
             }
             case 4:{
