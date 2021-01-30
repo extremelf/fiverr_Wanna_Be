@@ -86,7 +86,7 @@ public class UserMenu implements Menu{
                 System.out.println("Preço por hora: (nada para preço default)");
                 String precoadd = scan.nextLine();
                 float precoPorHoraadd = 0.0f;
-                if(precoadd!=null){
+                if(!precoadd.isBlank()){
                     precoPorHoraadd = Float.parseFloat(precoadd);
                 }
 
@@ -120,22 +120,28 @@ public class UserMenu implements Menu{
 
                                 if (alterarProjeto!=999) {
                                     if (autenticado.getProjetos().get(alterarProjeto).isAuthor(autenticado.getUserName())) {
+                                        scan.nextLine();
+                                        System.out.println("Profissão do convidado: ");
+                                        String profConvidado = scan.nextLine();
                                         for (Utilizador utilizadore : utilizadores) {
-                                            if (utilizadore.toStringReduzido() != null) {
+                                            if (utilizadore.toStringReduzido() != null && utilizadore.getProfissao().equals(profConvidado)) {
                                                 System.out.println(utilizadore.toStringReduzido());
                                             }
                                         }
                                         scan.nextLine();
                                         System.out.println("username do utilizador a convidar:");
                                         String convidado = scan.nextLine();
-
+                                        boolean sucesso=false;
                                         for (Utilizador utilizadore : utilizadores) {
                                             if (utilizadore.getUserName().equals(convidado)) {
                                                 convites.add(new Convite(autenticado.getUserName(), utilizadore.getUserName(), autenticado.getProjetos().get(alterarProjeto)));
+                                                sucesso=true;
                                                 break;
                                             }
                                         }
-                                        System.out.println("Utilizador não encontrado");
+                                        if(sucesso){
+                                            System.out.println("Utilizador não encontrado");
+                                        }
                                         break;
                                     } else {
                                         System.out.println("Sem permissão para realizar convites no projeto selecionado");
@@ -148,7 +154,7 @@ public class UserMenu implements Menu{
                                 }
                             }
                             case 3: {
-                                if (alterarProjeto!=999) {
+                                if (alterarProjeto!=999 && autenticado.getProjetos().get(alterarProjeto).isAuthor(autenticado.getUserName())) {
                                     int alterarProjeto3;
                                     alterarProjeto3 = inputInt("\n1 - Eliminar todas as tarefas\n2 - Desassociar todas as tarefas", scan);
                                     scan.nextLine();
@@ -174,7 +180,7 @@ public class UserMenu implements Menu{
                                 }
                             }
                             case 4: {
-                                if (alterarProjeto!=999) {
+                                if (alterarProjeto!=999 && autenticado.getProjetos().get(alterarProjeto).isAuthor(autenticado.getUserName())) {
                                     for (int xu = 0; xu < autenticado.getProjetos().get(alterarProjeto).getConvidados().size(); xu++) {
                                         System.out.println("ID Convidado: " + xu);
                                         System.out.println(autenticado.getProjetos().get(alterarProjeto).toStringConvidados(xu));
@@ -192,7 +198,7 @@ public class UserMenu implements Menu{
                                     }
                                     break;
                                 } else {
-                                    System.out.println("Sem projeto selecionado");
+                                    System.out.println("Sem projeto selecionado / Sem permissão");
                                     break;
                                 }
                             }
@@ -226,46 +232,23 @@ public class UserMenu implements Menu{
                 }
                 break;
             }
-            case 5:{
-                for(int k = 0;k<autenticado.getTarefas().size();k++){
-                    System.out.println(autenticado.getTarefas().get(k).toString());
-                }
-                System.out.println("Selecione a tarefa a alterar: ");
-                int alterarTarefa = scan.nextInt();
-                scan.nextLine();
-                if(autenticado.getTarefas().get(alterarTarefa)!=null){
-                    String menuAlterarTarefa = "-------------------\n1 - Apagar Tarefa\n2 - Associar a projeto\n3 - Terminar tarefa\n0 - Sair\n -------------------\n";
-                    int alterarTarefa2;
-                    alterarTarefa2 = inputInt(menuAlterarTarefa,scan);
-                    scan.nextLine();
+            case 5: {
+                int alterarTarefa2;
+                int alterarTarefa = 999;
+                do {
+                    alterarTarefa2 = inputInt("-------------------\n1 - Selecionar uma Tarefa\n2 - Terminar Tarefa\n3 - Remover Tarefa\n4 - Associar a Projeto\n0 - Sair\n-------------------", scan);
+                    switch (alterarTarefa2) {
+                        case 1: {
+                            for (int k = 0; k < autenticado.getTarefas().size(); k++) {
+                                System.out.println(autenticado.getTarefas().get(k).toString());
+                            }
 
-                    switch(alterarTarefa2){
-                        case 1:{
-                            if(autenticado.getTarefas().get(alterarTarefa).isAuthor(autenticado.getUserName())){
-                                int opApagar=0;
-                                do{
-                                    opApagar=inputInt("Confirmação:\n1 - Apagar\n2 - Cancelar",scan);
-                                    switch(opApagar){
-                                        case 1:{
-                                            autenticado.getTarefas().remove(alterarTarefa);
-                                        }
-                                        case 2:{
-                                            System.out.println("Cancelado com sucesso");
-                                        }
-                                        default:{
-                                            System.out.println("Existem apenas 2 opçoes");
-                                        }
-                                    }
-                                }while(opApagar!=2);
-                            }
-                            else{
-                                System.out.println("Sem permissão para realizar convites na tarefa selecionada");
-                            }
-                            break;
+                            alterarTarefa = inputInt("Selecione a tarefa a alterar: (999 para cancelar)", scan);
+                            scan.nextLine();
                         }
-                        case 3:{
-                            if (autenticado.getTarefas().get(alterarTarefa).getDataHorafim()!=null) {
-                                System.out.println("Data de inicio: (DD/MM/YYYY HH:mm)");
+                        case 2: {
+                            if (autenticado.getTarefas().get(alterarTarefa).getDataHorafim() != null) {
+                                System.out.println("Data de fim: (DD/MM/YYYY HH:mm)");
                                 String dataFim = scan.nextLine();
                                 Date dataFimAdd = null;
                                 if (!dataFim.isBlank()) {
@@ -277,14 +260,45 @@ public class UserMenu implements Menu{
                             } else {
                                 System.out.println("Tarefa já está terminada");
                             }
-                            break;
                         }
-                        case 0:{
-                            break;
+                        case 3: {
+                            if (autenticado.getTarefas().get(alterarTarefa).isAuthor(autenticado.getUserName())) {
+                                int opApagar = 0;
+                                do {
+                                    opApagar = inputInt("Confirmação:\n1 - Apagar\n2 - Cancelar", scan);
+                                    switch (opApagar) {
+                                        case 1 -> {
+                                            autenticado.getTarefas().remove(alterarTarefa);
+                                        }
+                                        case 2 -> {
+                                            System.out.println("Cancelado com sucesso");
+                                        }
+                                        default -> {
+                                            System.out.println("Existem apenas 2 opçoes");
+                                        }
+                                    }
+                                } while (opApagar != 2);
+                            } else {
+                                System.out.println("Sem permissão para realizar convites na tarefa selecionada");
+                                break;
+                            }
+                        }
+                        case 4: {
+                            if (alterarTarefa != 999) {
+                                for (int xac = 0; xac < autenticado.getProjetos().size(); xac++) {
+                                    System.out.println(autenticado.getProjetos().get(xac).toString());
+                                }
+                                int alterarTarefa3 = 999;
+                                alterarTarefa3 = inputInt("selecione Projeto: (999 para cancelar)", scan);
+                                if (alterarTarefa3 != 999) {
+                                    autenticado.getProjetos().get(alterarTarefa3).getTarefas().add(autenticado.getTarefas().get(alterarTarefa));
+                                    autenticado.getTarefas().remove(alterarTarefa);
+                                }
+                                break;
+                            }
                         }
                     }
-                }
-
+                }while(alterarTarefa2!=0);
             }
             case 6:{
                 break;
