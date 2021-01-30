@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class tarefa implements Serializable {
 
-    private static int contador=0;
+    private static int contador=1;
 
     private int num;
     private int numProjeto;
@@ -25,7 +25,7 @@ public class tarefa implements Serializable {
 
      *O sistema de invites ainda não sei bem como pode funcionar mas o que vai fazer é, caso aceite, efetua uma copia da tarefa no array do autor,os convites vai ter de ser uma cena persistente
      *que não depende de logins efetuados, vai ter de ser um objeto novo que vai guardar as info do autor e convidado e a variavel da tarefa a guardar, para ver se um user tem convites aquilo corre
-     *o array dos convites e quando tiver um match no "convidado"é mostrado (quase como tinder XDD)
+     *o array dos convites e quando tiver um match no "convidado"é mostrado
     */
 
     public tarefa(String autor, String nome, String descricao, Date inicio) {
@@ -43,10 +43,14 @@ public class tarefa implements Serializable {
         this.autor=autor;
     }
 
+    /**
+     *
+     * Função usada para imprimir objetos desta classe
+     * */
     @Override
     public String toString(){
         String str;
-        String str1 = "Num"+getNum()+"\nNome: "+getNome()+"\nDescrição: "+getDescricao()+"\nAutor: "+getAutor()+"\nData/Hora Inicio: "+getDataHoraInicio()+ "\nEstado tarefa: "+tarefastatus;
+        String str1 = "Num "+getNum()+"\nNome: "+getNome()+"\nDescrição: "+getDescricao()+"\nAutor: "+getAutor()+"\nData/Hora Inicio: "+getDataHoraInicio()+ "\nEstado tarefa: "+tarefastatus;
         if(getDataHorafim()!=null){
             String str2 = "\nData/Hora Fim: "+getDataHorafim();
             str = str1.concat(str2);
@@ -64,6 +68,11 @@ public class tarefa implements Serializable {
     public void AssociarProjeto(int numProjeto){
         this.numProjeto = numProjeto;
     }
+
+    /**
+     * Existem dois terminares de tarefa, um existe caso não seja introduzida data no sistema utilizando a data do sistema atual, o outro recorre ao input do user
+     *
+     */
 
     public void terminarTarefa(){
         this.DataHorafim = new Date();

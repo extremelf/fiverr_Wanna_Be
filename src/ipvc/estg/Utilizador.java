@@ -1,7 +1,6 @@
 package ipvc.estg;
 
 import java.io.*;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -14,7 +13,7 @@ public class Utilizador implements Serializable {
     private boolean isAdmin;
     private int idade;
     private String profissao;
-    private String contacto;
+    private String email;
     private int rating;
     private int horasDiarias;
     private int tarefasRealizadas;
@@ -32,7 +31,7 @@ public class Utilizador implements Serializable {
         this.password = password;
         this.profissao = profissao;
         this.userName = userName;
-        this.contacto = contacto;
+        this.email = contacto;
         this.isAdmin=false;
     }
     public Utilizador(String userName,String nome,String password, String profissao, String contacto,float precoDefault) {
@@ -43,7 +42,7 @@ public class Utilizador implements Serializable {
         this.password = password;
         this.profissao = profissao;
         this.userName = userName;
-        this.contacto = contacto;
+        this.email = contacto;
         this.precoDefault=precoDefault;
         this.isAdmin=false;
     }
@@ -103,9 +102,9 @@ public class Utilizador implements Serializable {
                 break;
             }
             case 5:{
-                System.out.println("Novo contacto:");
+                System.out.println("Novo Email:");
                 input=scan.nextLine();
-                this.setContacto(input);
+                this.setEmail(input);
                 break;
             }
             case 6:{
@@ -128,7 +127,7 @@ public class Utilizador implements Serializable {
 
     @Override
     public String toString(){
-       return "Username: "+userName+" Password: "+password+" Nome: "+nome+" Profissão: "+profissao+" Contacto: "+contacto+"\n";
+       return "Username: "+userName+" Password: "+password+" Nome: "+nome+" Profissão: "+profissao+" Contacto: "+ email +"\n";
     }
 
     public void novoProjeto(projeto novoProjeto){this.projetos.add(novoProjeto);}
@@ -212,12 +211,12 @@ public class Utilizador implements Serializable {
         this.profissao = profissao;
     }
 
-    public String getContacto() {
-        return contacto;
+    public String getEmail() {
+        return email;
     }
 
-    public void setContacto(String contacto) {
-        this.contacto = contacto;
+    public void setEmail(String email) {
+        this.email = email;
 
     }
 

@@ -4,6 +4,11 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class UserMenu implements Menu{
+
+    /**
+     * metodo usado para verificar se o numero é inteiro
+     */
+
     public static int inputInt(String out, Scanner scan){
         System.out.println(out);
         try{
@@ -306,6 +311,9 @@ public class UserMenu implements Menu{
             case 7:{
                 break;
             }
+            /**
+             * Função para saber os convites recebidos pelo utilizador associados a cada projeto
+              */
             case 9:{
                 int i = 0;
                 int contador = 0;

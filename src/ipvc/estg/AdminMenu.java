@@ -31,6 +31,7 @@ public class AdminMenu implements Menu{
                 break;
             }
             case 1:{
+                String contactadd;
                 System.out.println("Criar um utilizador");
                 System.out.println(" Insira o USERNAME do utilizador a ser criado:");
                 String useradd = scan.nextLine();
@@ -50,8 +51,22 @@ public class AdminMenu implements Menu{
                 System.out.println("Profissao: ");
                 String profissaoadd = scan.nextLine();
                 System.out.println("---------");
-                System.out.println("email: ");
-                String contactadd = scan.nextLine();
+                System.out.println("Email: ");
+                contactadd = scan.nextLine();
+                boolean hasArroba = false;
+                do {
+                for (int s = 0; s < contactadd.length(); s++) {
+
+                    if (contactadd.contains("@")&&(contactadd.contains(".com")||contactadd.contains(".pt"))&&contactadd.length()>5){
+                        hasArroba= true;
+                    } else {
+                        System.out.println("Email inválido. \nPor favor insira um email válido ");
+                        contactadd = scan.nextLine();
+                    }
+
+                }
+                } while (!hasArroba);
+
                 /**
                  * TEMOS DE ESPECIFICAR O QUE VAI SER O CONTACTO, É UM EMAIL OU NUMERO DE CONTATO? Vamos colocar email talvez seja melhor
                  * ISTO PQ O CONTACTO TB NAO PODE SER IGUAL PARA NENHUM UTILIZADOR QUER SEJA EMAIL OU NUMERO TELEFONICO
