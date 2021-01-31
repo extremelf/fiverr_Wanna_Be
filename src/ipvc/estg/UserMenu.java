@@ -452,8 +452,10 @@ public class UserMenu implements Menu{
                         case 4: {
                             if (alterarTarefa != 999) {
                                 for (int xac = 0; xac < autenticado.getProjetos().size(); xac++) {
+                                    System.out.println("-------------------");
                                     System.out.println("Num: "+xac);
                                     System.out.println(autenticado.getProjetos().get(xac).toString());
+                                    System.out.println("-------------------");
                                 }
                                 scan.nextLine();
                                 alterarTarefa3 = inputInt("selecione Projeto: (999 para cancelar)", scan);
