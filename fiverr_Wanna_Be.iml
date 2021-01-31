@@ -11,7 +11,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/poi-5.0.0/poi-5.0.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/resources/bcpkix-jdk15on-1.68.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -20,7 +20,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/poi-5.0.0/auxiliary/xmlsec-2.2.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/resources/bcprov-jdk15on-1.68.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -29,7 +29,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/poi-5.0.0/auxiliary/xmlgraphics-commons-2.4.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/resources/commons-codec-1.15.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -38,7 +38,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/poi-5.0.0/lib/SparseBitSet-1.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/resources/commons-collections4-4.4.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -47,7 +47,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/poi-5.0.0/ooxml-lib/commons-compress-1.20.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/resources/commons-compress-1.20.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -56,7 +56,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/poi-5.0.0/poi-ooxml-5.0.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/resources/commons-math3-3.6.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -65,7 +65,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/poi-5.0.0/ooxml-lib/curvesapi-1.06.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/resources/curvesapi-1.06.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -74,7 +74,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/poi-5.0.0/auxiliary/graphics2d-0.30.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/resources/fontbox-2.0.22.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -83,7 +83,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/poi-5.0.0/poi-examples-5.0.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/resources/graphics2d-0.30.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -92,7 +92,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/poi-5.0.0/lib/commons-collections4-4.4.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/resources/pdfbox-2.0.22.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -101,7 +101,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/poi-5.0.0/auxiliary/batik-all-1.13.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/resources/poi-5.0.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -110,7 +110,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/poi-5.0.0/poi-integration-5.0.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/resources/poi-examples-5.0.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -119,7 +119,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/poi-5.0.0/poi-scratchpad-5.0.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/resources/poi-excelant-5.0.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -128,7 +128,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/poi-5.0.0/lib/commons-math3-3.6.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/resources/poi-integration-5.0.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -137,7 +137,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/poi-5.0.0/ooxml-lib/xmlbeans-4.0.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/resources/poi-ooxml-5.0.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -146,7 +146,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/poi-5.0.0/poi-ooxml-full-5.0.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/resources/poi-ooxml-full-5.0.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -155,7 +155,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/poi-5.0.0/auxiliary/xml-apis-ext-1.3.04.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/resources/poi-ooxml-lite-5.0.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -164,7 +164,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/poi-5.0.0/poi-ooxml-lite-5.0.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/resources/poi-scratchpad-5.0.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -173,7 +173,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/poi-5.0.0/auxiliary/bcpkix-jdk15on-1.68.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/resources/SparseBitSet-1.2.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -182,7 +182,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/poi-5.0.0/auxiliary/bcprov-jdk15on-1.68.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/resources/xml-apis-ext-1.3.04.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -191,7 +191,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/poi-5.0.0/poi-excelant-5.0.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/resources/xmlbeans-4.0.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -200,7 +200,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/poi-5.0.0/lib/commons-codec-1.15.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/resources/xmlgraphics-commons-2.4.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -209,16 +209,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/poi-5.0.0/auxiliary/fontbox-2.0.22.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/poi-5.0.0/auxiliary/pdfbox-2.0.22.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/resources/xmlsec-2.2.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
