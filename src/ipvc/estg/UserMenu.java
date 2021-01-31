@@ -373,7 +373,7 @@ public class UserMenu implements Menu{
                     switch (alterarTarefa2) {
                         case 1: {
                             for (int k = 0; k < autenticado.getTarefas().size(); k++) {
-                                System.out.println("Num: "+k);
+                                System.out.print("Num: "+k);
                                 System.out.println(autenticado.getTarefas().get(k).toString());
                             }
 
@@ -382,25 +382,28 @@ public class UserMenu implements Menu{
                             break;
                         }
                         case 2: {
-                            if (autenticado.getTarefas().get(alterarTarefa).getDataHorafim() != null) {
-                                System.out.println("Data de fim: (DD/MM/YYYY HH:mm)");
-                                String dataFim = scan.nextLine();
-                                Date dataFimAdd;
-                                if (!dataFim.isBlank()) {
-                                    dataFimAdd = format.parse(dataFim);
-                                    autenticado.getTarefas().get(alterarTarefa).terminarTarefa(dataFimAdd);
-                                    break;
+                            if(alterarTarefa!=999){
+                                if (autenticado.getTarefas().get(alterarTarefa).getDataHorafim() != null) {
+                                    System.out.println("Data de fim: (DD/MM/YYYY HH:mm)");
+                                    String dataFim = scan.nextLine();
+                                    Date dataFimAdd;
+                                    if (!dataFim.isBlank()) {
+                                        dataFimAdd = format.parse(dataFim);
+                                        autenticado.getTarefas().get(alterarTarefa).terminarTarefa(dataFimAdd);
+                                        break;
+                                    } else {
+                                        autenticado.getTarefas().get(alterarTarefa).terminarTarefa();
+                                        break;
+                                    }
                                 } else {
-                                    autenticado.getTarefas().get(alterarTarefa).terminarTarefa();
+                                    System.out.println("Tarefa já está terminada");
                                     break;
                                 }
-                            } else {
-                                System.out.println("Tarefa já está terminada");
-                                break;
                             }
+                            break;
                         }
                         case 3: {
-                            if (autenticado.getTarefas().get(alterarTarefa).isAuthor(autenticado.getUserName())) {
+                            if (alterarTarefa!=999 &&autenticado.getTarefas().get(alterarTarefa).isAuthor(autenticado.getUserName())) {
                                 int opApagar;
                                 do {
                                     opApagar = inputInt("Confirmação:\n1 - Apagar\n2 - Cancelar", scan);
@@ -417,6 +420,7 @@ public class UserMenu implements Menu{
                                     }
                                 } while (opApagar != 2);
                             }
+                            break;
                         }
                         case 4: {
                             if (alterarTarefa != 999) {
@@ -479,8 +483,8 @@ public class UserMenu implements Menu{
                         autenticado.getProjetos().get(autenticado.getProjetos().size()-1).novoConvidado(autenticado.getUserName());
                         convites.remove(i);
                     }
-                    break;
                 }
+                break;
             }
             case 11:{
                 System.out.println("Introduza o mês:(MM/YYYY)");
