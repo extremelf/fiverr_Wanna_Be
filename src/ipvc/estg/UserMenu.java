@@ -166,7 +166,7 @@ public class UserMenu implements Menu{
                                     }
                                 }
                                 else{
-                                    System.out.println("Sem projeto selecionado");
+                                    System.out.println("Sem projeto selecionado / Sem permissão");
                                 }
                                 break;
                             }
@@ -193,10 +193,11 @@ public class UserMenu implements Menu{
                                         }
                                         eliminaProjetoConvidados(autenticado,utilizadores,alterarProjeto);
                                         autenticado.getProjetos().remove(alterarProjeto);
+                                        alterarProjeto = 999;
                                         break;
                                     }
                                 } else {
-                                    System.out.println("Sem projeto selecionado");
+                                    System.out.println("Sem projeto selecionado / Sem permissão");
                                     break;
                                 }
                             }
@@ -252,6 +253,9 @@ public class UserMenu implements Menu{
                                         autenticado.getProjetos().get(alterarProjeto).getTarefas().add(new tarefa(autenticado.getUserName(),nomeadd,descricaoadd,autenticado.getProjetos().get(alterarProjeto).getPrecoHora()));
                                     }
                                 }
+                                else{
+                                    System.out.println("Sem projeto selecionado / Sem permissão");
+                                }
                             }
                             case 6:{
                                 if (alterarProjeto!=999) {
@@ -293,23 +297,30 @@ public class UserMenu implements Menu{
                                                 }
                                             }
                                             case 3: {
-                                                if (autenticado.getTarefas().get(alterarTarefaP).isAuthor(autenticado.getUserName())) {
-                                                    int opApagar;
+                                                if (alterarTarefaP != 999) {
+                                                    if (autenticado.getTarefas().get(alterarTarefaP).isAuthor(autenticado.getUserName())) {
+                                                        int opApagar;
 
-                                                    opApagar = inputInt("Confirmação:\n1 - Apagar\n2 - Cancelar", scan);
-                                                    switch (opApagar) {
-                                                        case 1:{
-                                                            autenticado.getProjetos().get(alterarProjeto).getTarefas().remove(alterarTarefaP);
-                                                            break;
+                                                        opApagar = inputInt("Confirmação:\n1 - Apagar\n2 - Cancelar", scan);
+                                                        switch (opApagar) {
+                                                            case 1: {
+                                                                autenticado.getProjetos().get(alterarProjeto).getTarefas().remove(alterarTarefaP);
+                                                                alterarTarefaP = 999;
+                                                                break;
+                                                            }
+                                                            case 2: {
+                                                                System.out.println("Cancelado com sucesso");
+                                                                break;
+                                                            }
+                                                            default: {
+                                                                System.out.println("Existem apenas 2 opçoes");
+                                                            }
                                                         }
-                                                        case 2: {
-                                                            System.out.println("Cancelado com sucesso");
-                                                            break;
-                                                        }
-                                                        default : {
-                                                            System.out.println("Existem apenas 2 opçoes");
-                                                        }
+                                                        break;
                                                     }
+                                                } else {
+                                                    System.out.println("Sem projeto selecionado / Sem permissão");
+                                                    break;
                                                 }
                                             }
                                         }
@@ -379,8 +390,10 @@ public class UserMenu implements Menu{
                     switch (alterarTarefa2) {
                         case 1: {
                             for (int k = 0; k < autenticado.getTarefas().size(); k++) {
-                                System.out.print("Num: "+k);
+                                System.out.println("-------------------");
+                                System.out.println("Num: "+k);
                                 System.out.println(autenticado.getTarefas().get(k).toString());
+                                System.out.println("-------------------");
                             }
 
                             alterarTarefa = inputInt("Selecione a tarefa a alterar: (999 para cancelar)", scan);
@@ -410,12 +423,13 @@ public class UserMenu implements Menu{
                             break;
                         }
                         case 3: {
-                            if (alterarTarefa!=999 &&autenticado.getTarefas().get(alterarTarefa).isAuthor(autenticado.getUserName())) {
+                            if (alterarTarefa!=999 && autenticado.getTarefas().get(alterarTarefa).isAuthor(autenticado.getUserName())) {
                                 int opApagar;
                                     opApagar = inputInt("Confirmação:\n1 - Apagar\n2 - Cancelar", scan);
                                     switch (opApagar) {
                                         case 1:{
                                             autenticado.getTarefas().remove(alterarTarefa);
+                                            alterarTarefa=999;
                                             break;
                                         }
 
@@ -429,6 +443,9 @@ public class UserMenu implements Menu{
                                             break;
                                         }
                                     }
+                            }
+                            else{
+                                System.out.println("Sem tarefa selecionado / Sem permissão");
                             }
                             break;
                         }
@@ -445,8 +462,12 @@ public class UserMenu implements Menu{
                                     autenticado.getProjetos().get(alterarTarefa3).getTarefas().add(autenticado.getTarefas().get(alterarTarefa));
                                     autenticado.getTarefas().remove(alterarTarefa);
                                 }
-                                break;
                             }
+                            else{
+                                System.out.println("Sem tarefa selecionado / Sem permissão");
+                            }
+                            alterarTarefa=999;
+                            break;
                         }
                     }
                 }while(alterarTarefa2!=0);
