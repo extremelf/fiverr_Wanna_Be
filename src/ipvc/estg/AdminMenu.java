@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.zip.DataFormatException;
 
+import static ipvc.estg.Main.inputFloat;
+
 public class AdminMenu implements Menu{
     @Override
     public void show(){
@@ -53,6 +55,8 @@ public class AdminMenu implements Menu{
                 System.out.println("---------");
                 System.out.println("Email: ");
                 contactadd = scan.nextLine();
+                float precoDefaultadd;
+                precoDefaultadd = inputFloat("Preço por hora default: ",scan);
                 boolean hasArroba = false;
                 do {
                 for (int s = 0; s < contactadd.length(); s++) {
@@ -76,7 +80,7 @@ public class AdminMenu implements Menu{
                  * DIZ ME O QUE ACHAS DEPOIS POR MENSAGEM OU ESCREVE TB AÍ EM COMENTARIO
                  */
                 Utilizador tmp;
-                tmp = new Utilizador(useradd, nomeadd, passwordaad, profissaoadd, contactadd);
+                tmp = new Utilizador(useradd, nomeadd, passwordaad, profissaoadd, contactadd,precoDefaultadd);
                 utilizadores.add(tmp);
                 break;
             }

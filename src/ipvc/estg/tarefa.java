@@ -7,9 +7,6 @@ import java.util.Date;
 
 public class tarefa implements Serializable {
 
-    private static int contador=1;
-
-    private int num;
     private int numProjeto;
     private String nome;
     private String descricao;
@@ -27,16 +24,13 @@ public class tarefa implements Serializable {
      *que não depende de logins efetuados, vai ter de ser um objeto novo que vai guardar as info do autor e convidado e a variavel da tarefa a guardar, para ver se um user tem convites aquilo corre
      *o array dos convites e quando tiver um match no "convidado"é mostrado
     */
-
     public tarefa(String autor, String nome, String descricao, Date inicio) {
-        this.num = contador++;
         this.nome = nome;
         this.descricao = descricao;
         this.dataHoraInicio = inicio;
         this.autor=autor;
     }
     public tarefa(String autor, String nome, String descricao){
-        this.num = contador++;
         this.nome = nome;
         this.descricao = descricao;
         this.dataHoraInicio = new Date();
@@ -50,7 +44,7 @@ public class tarefa implements Serializable {
     @Override
     public String toString(){
         String str;
-        String str1 = "Num "+getNum()+"\nNome: "+getNome()+"\nDescrição: "+getDescricao()+"\nAutor: "+getAutor()+"\nData/Hora Inicio: "+getDataHoraInicio()+ "\nEstado tarefa: "+tarefastatus;
+        String str1 = "Nome: "+getNome()+"\nDescrição: "+getDescricao()+"\nAutor: "+getAutor()+"\nData/Hora Inicio: "+getDataHoraInicio()+ "\nEstado tarefa: "+tarefastatus;
         if(getDataHorafim()!=null){
             String str2 = "\nData/Hora Fim: "+getDataHorafim();
             str = str1.concat(str2);
@@ -87,14 +81,6 @@ public class tarefa implements Serializable {
             this.DataHorafim = fim;
         }
         this.tarefastatus = tarefaStatus.CLOSED;
-    }
-
-    public int getNum() {
-        return num;
-    }
-
-    public void setNum(int num) {
-        this.num = num;
     }
 
     public String getAutor() {

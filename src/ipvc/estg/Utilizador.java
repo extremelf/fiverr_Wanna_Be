@@ -2,6 +2,7 @@ package ipvc.estg;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 
 public class Utilizador implements Serializable {
@@ -78,39 +79,58 @@ public class Utilizador implements Serializable {
 
         switch(op){
             case 1:{
-                System.out.println("Novo username:");
+                System.out.println("Alterar username:");
+                System.out.println("Atual: "+this.getUserName());
+                System.out.print("Novo: ");
                 input=scan.nextLine();
                 this.setUserName(input);
                 break;
             }
             case 2:{
-                System.out.println("Novo nome:");
+                System.out.println("Alterar nome:");
+                System.out.println("Atual: "+this.getNome());
+                System.out.print("Novo: ");
                 input=scan.nextLine();
                 this.setNome(input);
                 break;
             }
             case 3:{
-                System.out.println("Nova password:");
+                System.out.println("Alterar password:");
+                System.out.println("Atual: "+this.getPassword());
+                System.out.print("Novo: ");
                 input=scan.nextLine();
                 this.setPassword(input);
                 break;
             }
             case 4:{
-                System.out.println("Nova profissão:");
+                System.out.println("Alterar profissão:");
+                System.out.println("Atual: "+this.getProfissao());
+                System.out.print("Novo: ");
                 input=scan.nextLine();
                 this.setProfissao(input);
                 break;
             }
             case 5:{
-                System.out.println("Novo Email:");
+                System.out.println("Alterar Contacto:");
+                System.out.println("Atual: "+this.getEmail());
+                System.out.print("Novo: ");
                 input=scan.nextLine();
                 this.setEmail(input);
                 break;
             }
             case 6:{
-                System.out.println("Horas de trabalho diarias:");
-                input= String.valueOf(scan.nextInt());
-                this.setHorasDiarias(horasDiarias);
+                System.out.println("Alterar horas de trabalho diarias:");
+                System.out.println("Atual: "+this.getHorasDiarias());
+                System.out.print("Novo: ");
+                input= scan.nextLine();
+                this.setHorasDiarias(Integer.parseInt(input));
+            }
+            case 7:{
+                System.out.println("Alterar preço/Hora default");
+                System.out.println("Atual: "+this.getPrecoDefault());
+                System.out.print("Novo: ");
+                input=scan.nextLine();
+                this.setPrecoDefault(Float.parseFloat(input));
             }
 
         }
@@ -134,6 +154,34 @@ public class Utilizador implements Serializable {
 
     public void novaTarefa(tarefa novaTarefa) {
         this.tarefas.add(novaTarefa);
+    }
+
+    public void tarefasIntervalo(Date inicio,Date fim){
+        if(inicio.after(fim)){
+            System.out.println("Data final não pode ser inferior à inicial!!");
+        }
+        else{
+            System.out.println("Tarefas Independentes:");
+            for(tarefa tarefa: tarefas){
+                if(tarefa.getDataHoraInicio().after(inicio) && tarefa.getDataHoraInicio().before(fim)){
+                    System.out.println("------------------------");
+                    System.out.println(tarefa.toString());
+                    System.out.println("------------------------");
+                }
+            }
+            System.out.println("De projetos:");
+            for(projeto projeto:projetos){
+                System.out.println("------------ "+projeto.getNomeProjeto()+" ------------");
+                for(int imprimir = 0; imprimir < projeto.getTarefas().size(); imprimir++){
+                    if(projeto.getTarefas().get(imprimir).getDataHoraInicio().after(inicio) && projeto.getTarefas().get(imprimir).getDataHoraInicio().before(fim)){
+                        System.out.println("------------------------");
+                        System.out.println(projeto.getTarefas().get(imprimir).toString());
+                        System.out.println("------------------------");
+                    }
+                }
+                System.out.println("------------------------");
+            }
+        }
     }
 
     //Getters and Setters

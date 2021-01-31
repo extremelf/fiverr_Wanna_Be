@@ -21,6 +21,7 @@ public class UserMenu implements Menu{
         }
     }
 
+
     public void eliminaProjetoConvidados(Utilizador autenticado, ArrayList<Utilizador> utilizadores, int posicao){
         for(int xx = 0; xx < autenticado.getProjetos().get(posicao).getConvidados().size(); xx++){
             for(Utilizador utilizadore : utilizadores){
@@ -28,6 +29,7 @@ public class UserMenu implements Menu{
                     for (int xa = 0; xa < utilizadore.getProjetos().size(); xa++) {
                         if (autenticado.getProjetos().get(posicao) == utilizadore.getProjetos().get(xa)) {
                             utilizadore.getProjetos().remove(xa);
+                            break;
                         }
                     }
                 }
@@ -52,7 +54,8 @@ public class UserMenu implements Menu{
 
     @Override
     public Utilizador choose(int op, Utilizador autenticado, ArrayList<Utilizador> utilizadores,ArrayList<Convite> convites) throws Exception {
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyy HH:mm");
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        SimpleDateFormat format1 = new SimpleDateFormat("dd/MM/yyyy");
 
         Scanner scan = new Scanner(System.in);
         switch(op){
@@ -62,16 +65,13 @@ public class UserMenu implements Menu{
                 break;
             }
             case 1:{
+
+                /**
+                 * Função que permite ao utilizador alterar os seus dados
+                 */
                 int op1;
 
-                System.out.println("Dado a alterar:");
-                System.out.println("1 - Username");
-                System.out.println("2 - Nome");
-                System.out.println("3 - Password");
-                System.out.println("4 - Profissão");
-                System.out.println("5 - Contacto");
-                System.out.println("0 - Sair");
-                op1 = scan.nextInt();
+                op1=inputInt("Dado a alterar:\n1 - Username\n2 - Nome\n3 - Password\n4 - Profissão\n5 - Contacto\n6 - Preço/Hora Default\n0 - Sair\n",scan);
 
                 if(op1 == 0){
                     break;
@@ -80,6 +80,10 @@ public class UserMenu implements Menu{
                 break;
             }
             case 2:{
+                /**
+                 * Criação de Projetos que reconhece se algum preço/Hora é introduzido
+                 */
+
                 System.out.println("Criar um projeto");
                 System.out.println("---------");
                 System.out.println("Nome do projeto: ");
@@ -104,14 +108,21 @@ public class UserMenu implements Menu{
                 break;
             }
             case 3:{
+                /**
+                 * Manipulação de dados dos projetos, com um submenu dedicado
+                 */
                     int alterarProjeto2;
                     int alterarProjeto=999;
                     do {
 
-                        alterarProjeto2 = inputInt("-------------------\n1 - Selecionar um projeto\n2 - Convidar Utilizador\n3 - Remover Projeto\n4 - Remover Convidados\n0 - Sair\n-------------------", scan);
+                        alterarProjeto2 = inputInt("-------------------\n1 - Selecionar um projeto\n2 - Convidar Utilizador\n3 - Remover Projeto\n4 - Remover Convidados\n5 - Adicionar tarefa\n0 - Sair\n-------------------", scan);
                         switch (alterarProjeto2) {
                             case 1: {
+                                /**
+                                 * Esta função serve para o utilizador selecionar um projeto, caso contrário não conseguirá fazer qualquer outra das opções
+                                 */
                                 for (int j = 0; j < autenticado.getProjetos().size(); j++) {
+                                    System.out.println("Num: "+j);
                                     System.out.println(autenticado.getProjetos().get(j).toString());
                                 }
                                 System.out.println();
@@ -122,7 +133,9 @@ public class UserMenu implements Menu{
                                 break;
                             }
                             case 2: {
-
+                                /**
+                                 * Função que permite o convite de novos utilizadores para o projeto (caso quem tente fazer o convite seja o criador do projeto)
+                                 */
                                 if (alterarProjeto!=999) {
                                     if (autenticado.getProjetos().get(alterarProjeto).isAuthor(autenticado.getUserName())) {
                                         scan.nextLine();
@@ -144,29 +157,31 @@ public class UserMenu implements Menu{
                                                 break;
                                             }
                                         }
-                                        if(sucesso){
+                                        if(!sucesso){
                                             System.out.println("Utilizador não encontrado");
                                         }
-                                        break;
                                     } else {
                                         System.out.println("Sem permissão para realizar convites no projeto selecionado");
-                                        break;
                                     }
                                 }
                                 else{
                                     System.out.println("Sem projeto selecionado");
-                                    break;
                                 }
+                                break;
                             }
                             case 3: {
+                                /**
+                                 * Função para a remoção do projeto selecionado, caso seja escolhida a opção de desassociar tarefas o que acontece é que as tarefas do projeto
+                                 * são adicionadas ao Arraylist das tarefas independentes do utilizador autenticado e posteriormente a eliminação do projeto no Arraylist de projetos dos convidados
+                                 */
                                 if (alterarProjeto!=999 && autenticado.getProjetos().get(alterarProjeto).isAuthor(autenticado.getUserName())) {
                                     int alterarProjeto3;
                                     alterarProjeto3 = inputInt("\n1 - Eliminar todas as tarefas\n2 - Desassociar todas as tarefas", scan);
                                     scan.nextLine();
                                     if (alterarProjeto3 == 1) {
-                                        for (int xo = 0; xo < autenticado.getProjetos().get(alterarProjeto).getTarefas().size(); xo++) {
-                                            autenticado.getProjetos().get(alterarProjeto).getTarefas().remove(xo);
-                                        }
+
+                                            autenticado.getProjetos().get(alterarProjeto).getTarefas().clear();
+
                                         eliminaProjetoConvidados(autenticado,utilizadores,alterarProjeto);
                                         autenticado.getProjetos().remove(alterarProjeto);
                                         break;
@@ -185,6 +200,9 @@ public class UserMenu implements Menu{
                                 }
                             }
                             case 4: {
+                                /**
+                                 * Função que permite eliminar um convidado específico do projeto, removendo do arraylist de projetos desse utilizador o projeto em questão
+                                 */
                                 if (alterarProjeto!=999 && autenticado.getProjetos().get(alterarProjeto).isAuthor(autenticado.getUserName())) {
                                     for (int xu = 0; xu < autenticado.getProjetos().get(alterarProjeto).getConvidados().size(); xu++) {
                                         System.out.println("ID Convidado: " + xu);
@@ -197,14 +215,35 @@ public class UserMenu implements Menu{
                                             for (int xa = 0; xa < utilizadore.getProjetos().size(); xa++) {
                                                 if (autenticado.getProjetos().get(alterarProjeto) == utilizadore.getProjetos().get(xa)) {
                                                     utilizadore.getProjetos().remove(xa);
+                                                    break;
                                                 }
                                             }
                                         }
                                     }
-                                    break;
                                 } else {
                                     System.out.println("Sem projeto selecionado / Sem permissão");
-                                    break;
+                                }
+                                break;
+                            }
+                            case 5:{
+                                /**
+                                 * Função de criação de tarefas associadas automaticamente ao projeto atual
+                                 */
+                                if(alterarProjeto!=999){
+                                    scan.nextLine();
+                                    System.out.println("Criar uma tarefa ");
+                                    System.out.println("---------");
+                                    System.out.println("Nome: ");
+                                    String nomeadd = scan.nextLine();
+                                    System.out.println("---------");
+                                    System.out.println("Descrição: ");
+                                    String descricaoadd = scan.nextLine();
+                                    System.out.println("---------");
+                                    System.out.println("Data de inicio: (DD/MM/YYYY HH:mm)");
+                                    String dataIniciounformated = scan.nextLine();
+                                    Date dataInicio = format.parse(dataIniciounformated);
+
+                                    autenticado.getProjetos().get(alterarProjeto).getTarefas().add(new tarefa(autenticado.getUserName(),nomeadd,descricaoadd,dataInicio));
                                 }
                             }
                             case 0: {
@@ -215,7 +254,9 @@ public class UserMenu implements Menu{
                 break;
             }
             case 4:{
-
+                /**
+                 * Função para criar tarefas independentes
+                 */
                 System.out.println("Criar uma tarefa ");
                 System.out.println("---------");
                 System.out.println("Nome: ");
@@ -227,7 +268,7 @@ public class UserMenu implements Menu{
                 System.out.println("Data de inicio: (DD/MM/YYYY HH:mm)");
                 String dataInicio = scan.nextLine();
 
-                Date dataAdd = null;
+                Date dataAdd;
                 if(!dataInicio.isBlank()){
                     dataAdd = format.parse(dataInicio);
                     autenticado.novaTarefa(new tarefa(autenticado.getUserName(), nomeadd, descricaoadd, dataAdd));
@@ -237,50 +278,60 @@ public class UserMenu implements Menu{
                 }
                 break;
             }
-            case 5: {
+            case 5:{
+                /**
+                 * Função para manipulação de tarefas com funcionamente equivalente à de manipulação de projetos
+                 */
+
                 int alterarTarefa2;
                 int alterarTarefa = 999;
+                int alterarTarefa3 = 999;
                 do {
                     alterarTarefa2 = inputInt("-------------------\n1 - Selecionar uma Tarefa\n2 - Terminar Tarefa\n3 - Remover Tarefa\n4 - Associar a Projeto\n0 - Sair\n-------------------", scan);
                     switch (alterarTarefa2) {
                         case 1: {
                             for (int k = 0; k < autenticado.getTarefas().size(); k++) {
+                                System.out.println("Num: "+k);
                                 System.out.println(autenticado.getTarefas().get(k).toString());
                             }
 
                             alterarTarefa = inputInt("Selecione a tarefa a alterar: (999 para cancelar)", scan);
                             scan.nextLine();
+                            break;
                         }
                         case 2: {
                             if (autenticado.getTarefas().get(alterarTarefa).getDataHorafim() != null) {
                                 System.out.println("Data de fim: (DD/MM/YYYY HH:mm)");
                                 String dataFim = scan.nextLine();
-                                Date dataFimAdd = null;
+                                Date dataFimAdd;
                                 if (!dataFim.isBlank()) {
                                     dataFimAdd = format.parse(dataFim);
                                     autenticado.getTarefas().get(alterarTarefa).terminarTarefa(dataFimAdd);
+                                    break;
                                 } else {
                                     autenticado.getTarefas().get(alterarTarefa).terminarTarefa();
+                                    break;
                                 }
                             } else {
                                 System.out.println("Tarefa já está terminada");
+                                break;
                             }
                         }
                         case 3: {
                             if (autenticado.getTarefas().get(alterarTarefa).isAuthor(autenticado.getUserName())) {
-                                int opApagar = 0;
+                                int opApagar;
                                 do {
                                     opApagar = inputInt("Confirmação:\n1 - Apagar\n2 - Cancelar", scan);
                                     switch (opApagar) {
-                                        case 1 -> {
+                                        case 1 ->
                                             autenticado.getTarefas().remove(alterarTarefa);
-                                        }
-                                        case 2 -> {
+
+                                        case 2 ->
                                             System.out.println("Cancelado com sucesso");
-                                        }
-                                        default -> {
+
+                                        default ->
                                             System.out.println("Existem apenas 2 opçoes");
-                                        }
+
                                     }
                                 } while (opApagar != 2);
                             } else {
@@ -291,10 +342,12 @@ public class UserMenu implements Menu{
                         case 4: {
                             if (alterarTarefa != 999) {
                                 for (int xac = 0; xac < autenticado.getProjetos().size(); xac++) {
+                                    System.out.println("Num: "+xac);
                                     System.out.println(autenticado.getProjetos().get(xac).toString());
                                 }
-                                int alterarTarefa3 = 999;
+                                scan.nextLine();
                                 alterarTarefa3 = inputInt("selecione Projeto: (999 para cancelar)", scan);
+                                scan.nextLine();
                                 if (alterarTarefa3 != 999) {
                                     autenticado.getProjetos().get(alterarTarefa3).getTarefas().add(autenticado.getTarefas().get(alterarTarefa));
                                     autenticado.getTarefas().remove(alterarTarefa);
@@ -309,13 +362,23 @@ public class UserMenu implements Menu{
                 break;
             }
             case 7:{
+                /**
+                 * Função para imprimir todas as tarefas do utilizador que tenham sido iniciadas dentro dos prazos estabelecidos
+                 */
+                System.out.println("Introduza a data de início: (DD/MM/YYYY)");
+                String datainicialunformated = scan.nextLine();
+                Date dataInicial = format1.parse(datainicialunformated);
+                System.out.println("Introduza a data de fim: (DD/MM/YYYY)");
+                String dataFinalunformated = scan.nextLine();
+                Date dataFinal = format1.parse(dataFinalunformated);
+                autenticado.tarefasIntervalo(dataInicial,dataFinal);
                 break;
             }
             /**
              * Função para saber os convites recebidos pelo utilizador associados a cada projeto
               */
             case 9:{
-                int i = 0;
+                int i;
                 int contador = 0;
                 System.out.println("Convites Recebidos:");
                 for (int k = 0; k<convites.size();k++) {
@@ -336,21 +399,9 @@ public class UserMenu implements Menu{
                         autenticado.novoProjeto(convites.get(i).getProjeto());
                         autenticado.getProjetos().get(autenticado.getProjetos().size()-1).novoConvidado(autenticado.getUserName());
                         convites.remove(i);
-                        break;
                     }
-                    else{
-                        break;
-                    }
+                    break;
                 }
-            }
-            case 10:{
-                break;
-            }
-            case 11:{
-                break;
-            }
-            case 12:{
-                break;
             }
             default:{
                 System.out.println("Escolha opção válida");
