@@ -56,6 +56,7 @@ public class UserMenu implements Menu{
     public Utilizador choose(int op, Utilizador autenticado, ArrayList<Utilizador> utilizadores,ArrayList<Convite> convites) throws Exception {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         SimpleDateFormat format1 = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat formatMes = new SimpleDateFormat("MM/yyyy");
 
         Scanner scan = new Scanner(System.in);
         switch(op){
@@ -115,7 +116,7 @@ public class UserMenu implements Menu{
                     int alterarProjeto=999;
                     do {
 
-                        alterarProjeto2 = inputInt("-------------------\n1 - Selecionar um projeto\n2 - Convidar Utilizador\n3 - Remover Projeto\n4 - Remover Convidados\n5 - Adicionar tarefa\n0 - Sair\n-------------------", scan);
+                        alterarProjeto2 = inputInt("-------------------\n1 - Selecionar um projeto\n2 - Convidar Utilizador\n3 - Remover Projeto\n4 - Remover Convidados\n5 - Adicionar tarefa\n6 - Alterar Tarefa\n0 - Sair\n-------------------", scan);
                         switch (alterarProjeto2) {
                             case 1: {
                                 /**
@@ -241,10 +242,73 @@ public class UserMenu implements Menu{
                                     System.out.println("---------");
                                     System.out.println("Data de inicio: (DD/MM/YYYY HH:mm)");
                                     String dataIniciounformated = scan.nextLine();
-                                    Date dataInicio = format.parse(dataIniciounformated);
+                                    Date dataInicio;
+                                    if(!dataIniciounformated.isBlank()){
+                                        dataInicio = format.parse(dataIniciounformated);
+                                        autenticado.getProjetos().get(alterarProjeto).getTarefas().add(new tarefa(autenticado.getUserName(),nomeadd,descricaoadd,dataInicio,autenticado.getProjetos().get(alterarProjeto).getPrecoHora()));
 
-                                    autenticado.getProjetos().get(alterarProjeto).getTarefas().add(new tarefa(autenticado.getUserName(),nomeadd,descricaoadd,dataInicio));
+                                    }
+                                    else{
+                                        autenticado.getProjetos().get(alterarProjeto).getTarefas().add(new tarefa(autenticado.getUserName(),nomeadd,descricaoadd,autenticado.getProjetos().get(alterarProjeto).getPrecoHora()));
+                                    }
                                 }
+                            }
+                            case 6:{
+                                int alterarTarefa2P;
+                                int alterarTarefaP = 999;
+                                int alterarTarefa3P = 999;
+                                do {
+                                    alterarTarefa2P = inputInt("-------------------\n1 - Selecionar uma Tarefa\n2 - Terminar Tarefa\n3 - Remover Tarefa\n0 - Sair\n-------------------", scan);
+                                    switch (alterarTarefa2P) {
+                                        case 1: {
+                                            for (int kl = 0; kl < autenticado.getProjetos().get(alterarProjeto).getTarefas().size(); kl++) {
+                                                System.out.println("Num: "+kl);
+                                                System.out.println(autenticado.getTarefas().get(kl).toString());
+                                            }
+
+                                            alterarTarefaP = inputInt("Selecione a tarefa a alterar: (999 para cancelar)", scan);
+                                            scan.nextLine();
+                                            break;
+                                        }
+                                        case 2: {
+                                            if (autenticado.getTarefas().get(alterarTarefaP).getDataHorafim() != null) {
+                                                System.out.println("Data de fim: (DD/MM/YYYY HH:mm)");
+                                                String dataFim = scan.nextLine();
+                                                Date dataFimAdd;
+                                                if (!dataFim.isBlank()) {
+                                                    dataFimAdd = format.parse(dataFim);
+                                                    autenticado.getProjetos().get(alterarProjeto).getTarefas().get(alterarTarefaP).terminarTarefa(dataFimAdd);
+                                                    break;
+                                                } else {
+                                                    autenticado.getProjetos().get(alterarProjeto).getTarefas().get(alterarTarefaP).terminarTarefa();
+                                                    break;
+                                                }
+                                            } else {
+                                                System.out.println("Tarefa já está terminada");
+                                                break;
+                                            }
+                                        }
+                                        case 3: {
+                                            if (autenticado.getTarefas().get(alterarTarefaP).isAuthor(autenticado.getUserName())) {
+                                                int opApagar;
+                                                do {
+                                                    opApagar = inputInt("Confirmação:\n1 - Apagar\n2 - Cancelar", scan);
+                                                    switch (opApagar) {
+                                                        case 1 ->
+                                                                autenticado.getProjetos().get(alterarProjeto).getTarefas().remove(alterarTarefaP);
+
+                                                        case 2 ->
+                                                                System.out.println("Cancelado com sucesso");
+
+                                                        default ->
+                                                                System.out.println("Existem apenas 2 opçoes");
+
+                                                    }
+                                                } while (opApagar != 2);
+                                            }
+                                        }
+                                    }
+                                }while(alterarTarefa2P!=0);
                             }
                             case 0: {
                                 System.out.println("Voltando ao menu anterior");
@@ -267,14 +331,32 @@ public class UserMenu implements Menu{
                 System.out.println("---------");
                 System.out.println("Data de inicio: (DD/MM/YYYY HH:mm)");
                 String dataInicio = scan.nextLine();
+                System.out.println("---------");
+                System.out.println("Preço por hora: (nada para preço default)");
+                String precoadd = scan.nextLine();
+                float precoPorHoraaddTarefa = 0.0f;
+                if(!precoadd.isBlank()){
+                    precoPorHoraaddTarefa = Float.parseFloat(precoadd);
+                }
 
                 Date dataAdd;
                 if(!dataInicio.isBlank()){
-                    dataAdd = format.parse(dataInicio);
-                    autenticado.novaTarefa(new tarefa(autenticado.getUserName(), nomeadd, descricaoadd, dataAdd));
+                    if(precoPorHoraaddTarefa!=0.0f){
+                        dataAdd = format.parse(dataInicio);
+                        autenticado.novaTarefa(new tarefa(autenticado.getUserName(), nomeadd, descricaoadd, dataAdd,precoPorHoraaddTarefa));
+                    }
+                    else{
+                        dataAdd = format.parse(dataInicio);
+                        autenticado.novaTarefa(new tarefa(autenticado.getUserName(), nomeadd, descricaoadd, dataAdd,autenticado.getPrecoDefault()));
+                    }
                 }
                 else{
-                    autenticado.novaTarefa(new tarefa(autenticado.getUserName(), nomeadd, descricaoadd));
+                    if(precoPorHoraaddTarefa!=0.0f){
+                        autenticado.novaTarefa(new tarefa(autenticado.getUserName(), nomeadd, descricaoadd,precoPorHoraaddTarefa));
+                    }
+                    else{
+                        autenticado.novaTarefa(new tarefa(autenticado.getUserName(), nomeadd, descricaoadd,autenticado.getPrecoDefault()));
+                    }
                 }
                 break;
             }
@@ -334,9 +416,6 @@ public class UserMenu implements Menu{
 
                                     }
                                 } while (opApagar != 2);
-                            } else {
-                                System.out.println("Sem permissão para realizar convites na tarefa selecionada");
-                                break;
                             }
                         }
                         case 4: {
@@ -374,10 +453,10 @@ public class UserMenu implements Menu{
                 autenticado.tarefasIntervalo(dataInicial,dataFinal);
                 break;
             }
-            /**
-             * Função para saber os convites recebidos pelo utilizador associados a cada projeto
-              */
             case 9:{
+                /**
+                 * Função para saber os convites recebidos pelo utilizador associados a cada projeto
+                 */
                 int i;
                 int contador = 0;
                 System.out.println("Convites Recebidos:");
@@ -402,6 +481,19 @@ public class UserMenu implements Menu{
                     }
                     break;
                 }
+            }
+            case 11:{
+                System.out.println("Introduza o mês:(MM/YYYY)");
+                String mesunformated = scan.nextLine();
+                Date mes = formatMes.parse(mesunformated);
+                autenticado.relatorioMes(mes);
+                break;
+            }
+            case 12:{
+                Date mesatualunformated = new Date();
+                autenticado.relatorioMes(mesatualunformated);
+                System.out.println("Ficheiro criado com sucesso");
+                break;
             }
             default:{
                 System.out.println("Escolha opção válida");

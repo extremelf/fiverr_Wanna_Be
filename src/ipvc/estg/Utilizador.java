@@ -1,13 +1,28 @@
 package ipvc.estg;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
+import java.io.File;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.*;
+import java.io.FileOutputStream;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+
+
+
+
 
 public class Utilizador implements Serializable {
-
-
     private String userName;
     private String nome;
     private String password;
@@ -22,6 +37,7 @@ public class Utilizador implements Serializable {
     private float precoDefault;
     private ArrayList<tarefa> tarefas = new ArrayList<>();
     private ArrayList<projeto> projetos = new ArrayList<>();
+
 
 
     public Utilizador(String userName,String nome,String password, String profissao, String contacto) {
@@ -182,6 +198,76 @@ public class Utilizador implements Serializable {
                 System.out.println("------------------------");
             }
         }
+    }
+
+    public void relatorioMes(Date mes) throws IOException,Exception {
+        SimpleDateFormat formatMes = new SimpleDateFormat("MM/yyyy");
+        String mesStr = formatMes.format(mes);
+
+        int contador = 5;
+
+        XSSFWorkbook relatorioMes = new XSSFWorkbook();
+        XSSFSheet folha = relatorioMes.createSheet("Relatório Mes");
+        XSSFRow linha;
+
+        Map<Integer, Object[]> dadosTarefas = new TreeMap<Integer,Object[]>();
+
+
+        dadosTarefas.put(1,new Object[]{"Nome","Profissão","Contacto","Preço/Hora",});
+        dadosTarefas.put(2,new Object[]{this.getNome(),this.getProfissao(),this.getEmail(),this.getPrecoDefault()});
+        dadosTarefas.put(3,new Object[]{"Dados Tarefas Independentes:"});
+        dadosTarefas.put(4,new Object[]{"Nome","Descrição","dataInicio","dataFim","Preço/Hora"});
+        for(int x=0; x < tarefas.size(); x++) {
+            if(tarefas.get(x).getDataHoraInicio().getMonth()==mes.getMonth() && tarefas.get(x).getDataHoraInicio().getYear()==mes.getYear()){
+                dadosTarefas.put(contador,new Object[]{tarefas.get(x).getNome(),tarefas.get(x).getDescricao(),String.valueOf(tarefas.get(x).getDataHoraInicio()),String.valueOf(tarefas.get(x).getDataHorafim()),String.valueOf(tarefas.get(x).getPrecoHora())});
+                contador++;
+           }
+        }
+        dadosTarefas.put(contador, new Object[]{"Projetos"});
+        contador++;
+        dadosTarefas.put(contador,new Object[]{""});
+        contador++;
+        for(int y = 0; y < projetos.size(); y++){
+            dadosTarefas.put(contador, new Object[]{"------",projetos.get(y).getNomeProjeto(),"Nome cliente"+projetos.get(y).getNomeCliente(),"------"});
+            contador++;
+            dadosTarefas.put(contador, new Object[]{"Nome da Tarefa","Nome do autor","Descrição","DataHoraInicio","DataHoraFim","Preço/Hora"});
+            contador++;
+            for(int z = 0; z < projetos.get(y).getTarefas().size(); z++){
+                if(tarefas.get(z).getDataHoraInicio().getMonth()==mes.getMonth() && tarefas.get(z).getDataHoraInicio().getYear()==mes.getYear()) {
+                    dadosTarefas.put(contador, new Object[]{projetos.get(y).getTarefas().get(z).getNome(), projetos.get(y).getTarefas().get(z).getAutor(), projetos.get(y).getTarefas().get(z).getDescricao(), String.valueOf(projetos.get(y).getTarefas().get(z).getDataHoraInicio()), String.valueOf(projetos.get(y).getTarefas().get(z).getDataHorafim()), String.valueOf(projetos.get(y).getTarefas().get(z).getPrecoHora())});
+                    contador++;
+                }
+            }
+            dadosTarefas.put(contador, new Object[]{"------------------------------"});
+            contador++;
+        }
+
+        Set<Integer> Keyset = dadosTarefas.keySet();
+        int rowid = 0;
+
+        for(Integer key : Keyset ){
+            linha = folha.createRow(rowid++);
+            Object[] objectArr = dadosTarefas.get(key);
+            int cellid = 0;
+            for(Object obj : objectArr){
+                Cell cell = linha.createCell(cellid++);
+                if (obj instanceof String)
+                    cell.setCellValue((String)obj);
+                else if (obj instanceof Float)
+                    cell.setCellValue((float)obj);
+            }
+        }
+
+        LocalDate localDate = mes.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        String nomeficheiro = this.getUserName();
+        nomeficheiro = nomeficheiro.concat("-");
+        nomeficheiro = nomeficheiro.concat(String.valueOf(localDate.getMonthValue()));
+        nomeficheiro = nomeficheiro.concat("-");
+        nomeficheiro = nomeficheiro.concat(String.valueOf(localDate.getYear()));
+        nomeficheiro = nomeficheiro.concat(".xlsx");
+        FileOutputStream out = new FileOutputStream(nomeficheiro);
+        relatorioMes.write(out);
+        out.close();
     }
 
     //Getters and Setters

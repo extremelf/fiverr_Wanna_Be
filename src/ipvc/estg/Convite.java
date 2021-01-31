@@ -20,6 +20,8 @@ public class Convite {
         return "\nAutor: "+getAutor()+"\nNome do Projeto: "+getProjeto().getNomeProjeto();
     }
 
+    //Getters an Setters
+
     public boolean isAuthor(String autor){
         return this.autor.equals(autor);
     }

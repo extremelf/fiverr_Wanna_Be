@@ -13,6 +13,7 @@ public class tarefa implements Serializable {
     private Date dataHoraInicio;
     private Date DataHorafim;
     private String autor;
+    private float precoHora;
     public tarefaStatus tarefastatus = tarefaStatus.OPEN;
 
     /**
@@ -24,17 +25,19 @@ public class tarefa implements Serializable {
      *que não depende de logins efetuados, vai ter de ser um objeto novo que vai guardar as info do autor e convidado e a variavel da tarefa a guardar, para ver se um user tem convites aquilo corre
      *o array dos convites e quando tiver um match no "convidado"é mostrado
     */
-    public tarefa(String autor, String nome, String descricao, Date inicio) {
+    public tarefa(String autor, String nome, String descricao, Date inicio, float recoHora) {
         this.nome = nome;
         this.descricao = descricao;
         this.dataHoraInicio = inicio;
-        this.autor=autor;
+        this.autor = autor;
+        this.precoHora = precoHora;
     }
-    public tarefa(String autor, String nome, String descricao){
+    public tarefa(String autor, String nome, String descricao,float precoHora){
         this.nome = nome;
         this.descricao = descricao;
         this.dataHoraInicio = new Date();
-        this.autor=autor;
+        this.autor = autor;
+        this.precoHora = precoHora;
     }
 
     /**
@@ -81,6 +84,18 @@ public class tarefa implements Serializable {
             this.DataHorafim = fim;
         }
         this.tarefastatus = tarefaStatus.CLOSED;
+    }
+
+
+    //Getters and Setter
+
+
+    public float getPrecoHora() {
+        return precoHora;
+    }
+
+    public void setPrecoHora(float precoHora) {
+        this.precoHora = precoHora;
     }
 
     public String getAutor() {
